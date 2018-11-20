@@ -3,3 +3,16 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.container {
+  padding: 20px;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.delete-icon {
+  color: #ccc;
+  margin-left: 20px;
+}
