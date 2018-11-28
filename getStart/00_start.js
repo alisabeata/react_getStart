@@ -40,4 +40,91 @@ class Time extends Component {
     );
   }
 }
+
+
+
+
+
+// url request
+constructor(props) {
+  super(props);
+  this.state = {
+    isLoading: true,
+    data: []
+  }
+}
+
+componentDidMount() {
+  fetch().then(data => {
+    this.setState({isLoading: false, data: data})
+  });
+}
+
+render() {
+  const {isLoading, data} = this.state;
   
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  
+  return <div>{data}</div>;
+}
+
+
+
+
+// если запрос в процессе обработки, а компонента отмонтирвана (пользователь нажал активировал др компонент), то фиксится
+constructor(props) {
+  ...
+  this._isMounted = false;
+}
+
+componentDidMount() {
+  this._isMounted = true;
+  fetch().then(data => {
+    if (this._isMounted) {
+      this.setState({isLoading: false, data: data})
+    }
+  });
+}
+
+componentWillUnmount() {
+  this._isMounted = false;
+}
+
+
+
+
+
+// обработка ошибок у child-компонентов
+state = {
+  error: null,
+  errorInfo: null
+}
+
+componentDidCatch(error, info) {
+  this.setState({
+    error,
+    errorInfo
+  });
+}
+
+// parent render
+render() {
+  if (counter === 3) {
+    throw new Error('error!');
+  }
+  
+  return <div>{counter}</div>;
+}
+
+// child render
+render() {
+  const {counter, error} = this.state;
+  
+  if (error) {
+    return <p>{String(error.text)}</p>;
+  } else {
+    return <div>{counter}</div>;
+  }
+}
