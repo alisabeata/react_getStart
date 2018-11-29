@@ -128,3 +128,34 @@ render() {
     return <div>{counter}</div>;
   }
 }
+
+  
+  
+  
+// создание темплейта, передача children узла
+render() {
+  return (
+    <div>
+      <Title>Title text</Title>
+    </div>
+  );
+}
+  
+function Title(props) {
+  // >> <p className="title">Title text</p>
+  return (
+    <div>
+      <p className="title">{props.children}</p> 
+    </div>
+  );
+}
+  
+// для нескольких children исп React.Children.map, map Array не подходит, тк может быть одно значение, которое не будет являться массивом 
+function Title(props) {
+  return (
+    <div>
+      <p className="title">{React.Children.map(props.children, el => <span key={el}>{el}</span>)}</p> 
+    </div>
+  );
+}
+  
