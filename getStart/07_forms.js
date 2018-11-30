@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+// forms
 
+// обработка нескольких инпутов
 class App extends Component {
   state = {
     firstName: '',
@@ -11,7 +10,6 @@ class App extends Component {
 
   handleChange = event => {
     const {value, name} = event.target;
-    
     this.setState({[name]: value});
   }
 
@@ -39,5 +37,3 @@ class App extends Component {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('root'));
