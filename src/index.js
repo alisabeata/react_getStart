@@ -2,39 +2,28 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class App extends Component {
-  state = {
-    firstName: '',
-    secondName: '',
-    lastName: ''
-  };
-
-  handleChange = event => {
-    const {value, name} = event.target;
-    
-    this.setState({[name]: value});
+class ModalWindow extends Component {
+  render() { 
+    const {children} = this.props;
+    return ReactDOM.createPortal(children, document.getElementById('modals'));
   }
+}
+
+class App extends Component {
+  handleClick = event => {
+    console.log(event.target.tagName);
+  };
 
   render() {
     return (
-      <div>
-        <form>
-          <input 
-            name="firstName" 
-            onChange={this.handleChange} 
-            value={this.state.firstName} 
-          />
-          <input 
-            name="secondName" 
-            onChange={this.handleChange} 
-            value={this.state.secondName} 
-          />
-          <input 
-            name="lastName" 
-            onChange={this.handleChange} 
-            value={this.state.lastName} 
-          />
-        </form>
+      <div onClick={this.handleClick}>
+        <span>Hello</span>
+        {true ? (
+          <ModalWindow>
+            <span>modal window</span>
+            <button>btn</button>
+          </ModalWindow>
+        ) : null}
       </div>
     );
   }
