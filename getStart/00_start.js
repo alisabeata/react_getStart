@@ -42,6 +42,17 @@ class Time extends Component {
 }
 
 
+// рекомендуется объявл переменные для пропс
+render() {
+  const {color, data} = this.props; // <<
+  return (
+    <div>
+      <FirstChild color={color} data={data} />
+    </div>
+  );
+}
+
+
 
 
 

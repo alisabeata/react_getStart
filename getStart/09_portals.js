@@ -4,6 +4,8 @@
 
 // модальные компоненты, которые рендерятся отдельно от родительского компонента (прим модальные окна, тултипы, расп перед закр body), с точки зрения реакта являются child, с точки зрения DOM явл отдельными элементами
 
+// если нет элемента для вставки, то его можно сгенерировать в constructor
+
 class ModalWindow extends Component {
   render() { 
     const {children} = this.props;
@@ -66,3 +68,27 @@ class App extends Component {
   }
 }
 
+
+// toggle
+class App extends Component {
+  state = {
+    isModalPresent: false
+  };
+  
+  handleClickShowModal = () => {
+    this.setState({isModalPresent: !this.state.isModalPresent});
+  };
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClickShowModal}>toggle</button>
+        {this.state.isModalPresent ? (
+          <ModalWindow>
+            <span>modal window</span>
+          </ModalWindow>
+        ) : null}
+      </div>
+    );
+  }
+}
