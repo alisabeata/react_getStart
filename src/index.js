@@ -5,8 +5,17 @@ import './index.css';
 
 class SecondChild extends Component {
   static contextTypes = {
-    color: PropTypes.string
+    store: PropTypes.object,
+    addListener: PropTypes.func
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      store: this.context.store;
+    };
+    this.context.addListener(this.handleUpdateStore)
+  }
 
   render() {
     console.log(this.context)
@@ -29,11 +38,22 @@ class FirstChild extends Component {
 
 class App extends Component {
   static childContextTypes = {
-    color: PropTypes.string
+    store: PropTypes.object,
+    addListener: PropTypes.func
   };
 
+  // глобальный объект
+  store = {
+    firstName: 'Alice',
+    secondName: 'Doe'
+  };
+
+  store.onUpdate({
+    listeners.forEach(listner => listner(nextStore))
+  });
+
   getChildContext() {
-    return {color: 'blue'};
+    return {store, addListener};
   }
 
   render() {
