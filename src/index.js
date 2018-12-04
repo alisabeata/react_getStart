@@ -1,68 +1,54 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import './index.css';
 
-class SecondChild extends Component {
-  static contextTypes = {
-    store: PropTypes.object,
-    addListener: PropTypes.func
-  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      store: this.context.store;
-    };
-    this.context.addListener(this.handleUpdateStore)
-  }
-
-  render() {
-    console.log(this.context)
-    return (
-      <p style={{color: this.context.color}}>2</p>
-    );
+function pureHOC(WrapperdComponent) {
+  return class pureHOC extends PureComponent {
+    render() {
+      return <WrapperdComponent {...this.props} />;
+    }
   }
 }
 
-class FirstChild extends Component {
-  render() {
-    return (
-      <div>
-        <span>1</span>
-        <SecondChild />
-      </div>
-    );
+function withWindowWidthHOC(WrapperdComponent) {
+  return class WithWindowWidthHOC extends PureComponent {
+    constructor(props) {
+      super();
+
+      this.state = {
+        width: window.innerWidth
+      };
+    }
+
+    handleResize = () => {
+      this.setState({width: window.innerWidth});
+    }
+
+    componentDidMount() {
+      window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleResize);
+    }
+
+    render() {
+      const {width} = this.state;
+      return <WrapperdComponent {...this.props} width={width} />;
+    }
   }
 }
 
-class App extends Component {
-  static childContextTypes = {
-    store: PropTypes.object,
-    addListener: PropTypes.func
-  };
-
-  // глобальный объект
-  store = {
-    firstName: 'Alice',
-    secondName: 'Doe'
-  };
-
-  store.onUpdate({
-    listeners.forEach(listner => listner(nextStore))
-  });
-
-  getChildContext() {
-    return {store, addListener};
-  }
-
-  render() {
-    return (
-      <div>
-        <FirstChild />
-      </div>
-    );
-  }
+function App({greeting, width}) {
+  return <h1>{greeting}{width}</h1>;
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+App.defaultProps = {
+  greeting: 'Empty greeting'
+};
+
+App = pureHOC(App);
+App = withWindowWidthHOC(App);
+
+ReactDOM.render(<App greeting="hello" />, document.getElementById('root'));

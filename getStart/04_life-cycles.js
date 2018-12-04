@@ -1,4 +1,4 @@
-// lifecycle
+// life cycles
 
 
 // Монтирование компоненты:

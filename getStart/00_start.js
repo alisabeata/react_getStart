@@ -53,6 +53,13 @@ render() {
 }
 
 
+// если super вызывается с props, то внутри конструктора доступно this.props
+constructor(props) {
+  super();
+  super(props);
+}
+
+
 
 
 
