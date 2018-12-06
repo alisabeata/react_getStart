@@ -3,40 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-function pureHOC(WrapperdComponent) {
-  return class pureHOC extends PureComponent {
-    render() {
-      return <WrapperdComponent {...this.props} />;
-    }
+class WithWindowWidth extends PureComponent {
+  constructor(props) {
+    super();
+
+    this.state = {
+      width: window.innerWidth
+    };
   }
-}
 
-function withWindowWidthHOC(WrapperdComponent) {
-  return class WithWindowWidthHOC extends PureComponent {
-    constructor(props) {
-      super();
+  handleResize = () => {
+    this.setState({width: window.innerWidth});
+  }
 
-      this.state = {
-        width: window.innerWidth
-      };
-    }
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
 
-    handleResize = () => {
-      this.setState({width: window.innerWidth});
-    }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
 
-    componentDidMount() {
-      window.addEventListener('resize', this.handleResize);
-    }
-
-    componentWillUnmount() {
-      window.removeEventListener('resize', this.handleResize);
-    }
-
-    render() {
-      const {width} = this.state;
-      return <WrapperdComponent {...this.props} width={width} />;
-    }
+  render() {
+    const {width} = this.state;
+    const {render} = this.props;
+    return render({width});
   }
 }
 
@@ -48,7 +39,8 @@ App.defaultProps = {
   greeting: 'Empty greeting'
 };
 
-App = pureHOC(App);
-App = withWindowWidthHOC(App);
-
-ReactDOM.render(<App greeting="hello" />, document.getElementById('root'));
+ReactDOM.render(
+  <WithWindowWidth render={({width}) => 
+    <App greeting="hello" width={width} />
+  } />,
+  document.getElementById('root'));
