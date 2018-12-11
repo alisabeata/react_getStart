@@ -2,7 +2,8 @@
 
 // - Link
 // - Route
-
+// - Switch
+// - Redirect
 
 // start
 yarn add react-router-dom
@@ -58,3 +59,43 @@ const App = () => (
 // history
 // location
 // match
+
+
+// - Switch
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
+
+<Switch>
+  <Route path="/" exact={true} component={Home} />
+  <Route path="/about" component={About} />
+  <Route path="/hobbies" component={Hobbies} />
+</Switch>
+  
+// Switch рендерит только активный компонент, первый прошедший все условия 
+// можно исп для отображения стр по-умолчанию NotFound (path="*")
+// если роут не соотв не одному из условий
+  
+...
+const NotFound = () => <p>Not Found</p>;
+
+<Switch>
+  <Route path="/" exact={true} component={Home} />
+  <Route path="/about" component={About} />
+  <Route path="/hobbies" component={Hobbies} />
+  <Route path="*" component={NotFound} />
+</Switch>
+  
+  
+// - Redirect
+import {BrowserRouter, Link, Route, Switch, Redirect} from 'react-router-dom';
+
+<Switch>
+  <Route path="/" exact={true} component={Home} />
+  <Route path="/about" component={About} />
+  <Route path="/hobbies" component={Hobbies} />
+  <Redirect to="/" />
+</Switch>
+  
+// для описания действий по-умолчанию можно исп Redirect, если Route не проходит соотв path
+// Redirect инициирует переход на указанный path через аттр to=""
+// так же можно исп Redirect с условием переадресации с определёного url (букваьно переадресация со старого урла на новый) from=""
+<Redirect from="/n" to="/news" />

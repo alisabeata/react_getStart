@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 
 
 const Home = () => <p>Home</p>;
@@ -16,9 +16,11 @@ const App = () => (
       <Link to="/about">About</Link>
       <Link to="/hobbies">Hobbies</Link>
     </nav>
-    <Route path="/" exact={true} component={Home} />
-    <Route path="/about" component={About} />
-    <Route path="/hobbies" component={Hobbies} />
+    <Switch>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/hobbies" component={Hobbies} />
+    </Switch>
   </div>
 );
 
