@@ -4,6 +4,8 @@
 // - Route
 // - Switch
 // - Redirect
+// - вложенные роуты 
+
 
 // start
 yarn add react-router-dom
@@ -60,6 +62,15 @@ const App = () => (
 // location
 // match
 
+// для рендеринга стейтфул компонент исп аттр component
+<Route path="/about" component={About} />
+// для стейтлесс (функция с ретёрн) исп render
+<Route path="/about" render={(match, location, history) => {<About match={match} ... />}} />
+// такой подход исп для того чтобы избежать лишний рендеринг
+
+// аттр chilren рендерит всегда, но исп например для анимаций, внутри сопоставляет совпадение match
+<Route path="/about" chilren={(match) => {<About match={match} ... />}} />
+
 
 // - Switch
 import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
@@ -99,3 +110,37 @@ import {BrowserRouter, Link, Route, Switch, Redirect} from 'react-router-dom';
 // Redirect инициирует переход на указанный path через аттр to=""
 // так же можно исп Redirect с условием переадресации с определёного url (букваьно переадресация со старого урла на новый) from=""
 <Redirect from="/n" to="/news" />
+
+  
+  
+// - вложенные роуты 
+const SportComponent = ({match}) => {
+  const {id} = match.params;
+  return <p>{id}</p>
+};
+
+const Hobbies = ({match}) => {
+  return (
+    <div>
+      <p>Hobbies</p>
+      <div>
+        <Link to={`${match.url}/yoga`}>Yoga</Link>
+        <Link to={`${match.url}/meditation`}>Meditation</Link>
+      </div>
+
+      <div>
+        <Route 
+          path={`${match.path}/:id`} 
+          component={SportComponent}
+        />
+      </div>
+    </div>
+  );
+};
+
+// для вложенных <Link /> исп match.url 
+// для вложенных <Route /> исп match.path 
+
+// один и тот же путь:
+// >> url: "hobbies/yoga"
+// >> path: "hobbies/:id"
