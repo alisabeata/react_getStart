@@ -93,7 +93,7 @@ compose(fn, fn1, fn2)(x)
 
 // render props
 
-// передача метода рендер компоненте
+// передача метода рендер компонента
 
 class WithWindowWidth extends Component {
   constructor(props) {

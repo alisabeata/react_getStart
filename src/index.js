@@ -1,46 +1,30 @@
-import React, {Component, PureComponent} from 'react';
+//import React, {Component, PureComponent} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {BrowserRouter, Link, Route} from 'react-router-dom';
 
 
-class WithWindowWidth extends PureComponent {
-  constructor(props) {
-    super();
+const Home = () => <p>Home</p>;
+const About = () => <p>About</p>;
+const Hobbies = () => <p>Hobbies</p>;
 
-    this.state = {
-      width: window.innerWidth
-    };
-  }
-
-  handleResize = () => {
-    this.setState({width: window.innerWidth});
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  render() {
-    const {width} = this.state;
-    const {render} = this.props;
-    return render({width});
-  }
-}
-
-function App({greeting, width}) {
-  return <h1>{greeting}{width}</h1>;
-}
-
-App.defaultProps = {
-  greeting: 'Empty greeting'
-};
+const App = () => (
+  <div>
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/hobbies">Hobbies</Link>
+    </nav>
+    <Route path="/" exact={true} component={Home} />
+    <Route path="/about" component={About} />
+    <Route path="/hobbies" component={Hobbies} />
+  </div>
+);
 
 ReactDOM.render(
-  <WithWindowWidth render={({width}) => 
-    <App greeting="hello" width={width} />
-  } />,
-  document.getElementById('root'));
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>, 
+  document.getElementById('root')
+);
