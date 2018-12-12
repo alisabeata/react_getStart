@@ -5,6 +5,7 @@
 // - Switch
 // - Redirect
 // - вложенные роуты 
+// - API react-router 
 
 
 // start
@@ -144,3 +145,20 @@ const Hobbies = ({match}) => {
 // один и тот же путь:
 // >> url: "hobbies/yoga"
 // >> path: "hobbies/:id"
+
+
+// API react-router 
+// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom/docs/api
+
+// -- BrowserRouter
+// -- HashRouter
+// -- MemoryRouter
+// -- StaticRouter
+// -- Router
+// -- Link
+// -- NavLink
+// -- Prompt
+// -- Redirect
+// -- Route
+// -- Switch
+// -- withRouter
