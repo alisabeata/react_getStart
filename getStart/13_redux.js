@@ -4,9 +4,9 @@
 
 
 // - API/методы
-// - actions
+// - action
 // - actions creators
-// - reducers
+// - reducer
 // - store
 
 // start
@@ -37,11 +37,12 @@ replaceReducer(nextReducer)
 // заменяет редьюсер, который в настоящее время используется хранилищем 
 
 
-// - actions
+
+// - action
 
 // единственный способ изменить состояние — передать action — объект, описывающий, что произошло
-
 // action должен быть плоским объектом, должен иметь поле type, значение которого определяется как строковая константа
+// store.dispatch(action) отправляет action в хранилище
 { 
   type: 'ADD_TODO', 
 } 
@@ -78,11 +79,28 @@ function addTodo(text) {
 }
   
   
-// - reducers
+// - reducer
   
 // reducer — это чистая функция(!), которая принимает предыдущее состояние и действие (state и action) и возвращает следующее состояние (новую версию предыдущего)
 // данные в редьюсере нельзя мутировать!
+// нельзя внутри вызывать не чистые функции, напр Date.now() или Math.random(), тк они генерируют разные значения при вызове, reducer только вычисляет новую версию состояния и возвращать её
   
+const reducer = (state = {count: 0}, action) => {
+  switch(action.type) {
+    case 'ADD_COMMENT':
+      return {...state, count: state.count + 1};
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
+const action = {
+  type: 'ADD_COMMENT'
+};
+
+store.dispatch(action);
+console.log(store.getState()); // >> {count: 1}
   
   
 // - store
