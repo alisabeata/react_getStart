@@ -2,28 +2,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import createStore from './store';
 
-import {createStore} from 'redux';
+const store = createStore();
 
-const reducer = (state = {count: 0}, action) => {
-  switch(action.type) {
-    case 'ADD_COMMENT':
-      return {...state, count: state.count + 1};
-    default:
-      return state;
-  }
-};
+store.dispatch({
+  type: 'ADD_COMMENT', 
+  payload: 'comment text...'
+});
 
-const store = createStore(reducer);
-
-const action = {
-  type: 'ADD_COMMENT'
-};
-
-store.dispatch(action);
-console.log(store.getState());
-
-
+store.dispatch({
+  type: 'ADD_USER', 
+  payload: 'Username'
+});
 
 const App = () => null;
 

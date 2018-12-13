@@ -49,8 +49,8 @@ replaceReducer(nextReducer)
   
   
 // может иметь св-во error, payload, meta
-  
-// error — может быть установлено в true, если действие представляет ошибку
+// meta — может иметь любое значение, не явл payload, исп для передачи служебных данных
+// error — в поле error содержится описание ошибки, error — может быть установлено в true, если действие представляет ошибку
 // payload — свойство полезной нагрузки (payload) может иметь любое значение
 {
   type: 'ADD_TODO',
@@ -64,7 +64,7 @@ replaceReducer(nextReducer)
 	date: '15/11/2017',
   }
 }
-// meta — может иметь любое значение, не явл payload
+
   
 
   
@@ -104,3 +104,64 @@ console.log(store.getState()); // >> {count: 1}
   
   
 // - store
+
+  
+  
+  
+// организация кода
+  
+// в store.js размещается конфигурация хранилища
+// в нём обычно подкл мидлвары для работы с редаксом
+import {createStore, compose} from 'redux';
+import rootReducer from './reducers';
+
+export default (initialState = undefined) => {
+  return createStore(
+    rootReducer,
+    initialState,
+    compose(window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f) // << мидлвар для Redux DevTools
+  );
+};
+  
+// Redux DevTools: https://github.com/zalmoxisus/redux-devtools-extension
+
+  
+  
+// ./reducers 
+// применяется combineReducers для организации редьюсеров
+// обязательно исп дефолтное значение (state = {}, action)
+import {combineReducers} from 'redux';
+
+const comments = (state = {}, action) => state;
+const users = (state = {}, action) => state;
+
+export default combineReducers({
+  comments,
+  users
+});
+
+  
+// можно делать вложенние редьюсеров
+const comments = (state = {count: 0, comments: []}, action) => {
+  switch(action.type) {
+    case 'ADD_COMMENT':
+      return ({
+        ...state,
+        comments: [...state.comments, action.payload],
+        count: state.count + 1
+      });
+    default: return state;
+  }
+};
+const count = (state = 0, action) => state;
+const records = (state = [], action) => state;
+const users = combineReducers({
+  count,
+  records
+});
+
+export default combineReducers({
+  comments,
+  users
+});
+  
