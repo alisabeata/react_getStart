@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
+import {ADD_COMMENT} from '../actions/commentsTypes';
 
 const comments = (state = {count: 0, comments: []}, action) => {
   switch(action.type) {
-    case 'ADD_COMMENT':
+    case ADD_COMMENT:
       return ({
         ...state,
         comments: [...state.comments, action.payload],
@@ -13,11 +14,19 @@ const comments = (state = {count: 0, comments: []}, action) => {
 };
 
 const count = (state = 0, action) => {
-  return state;
+  switch(action.type) {
+    case 'ADD_USER':
+      return state + 1;
+    default: return state;
+  }
 };
 
 const records = (state = [], action) => {
-  return state;
+  switch(action.type) {
+    case 'ADD_USER':
+      return [...state, action.payload];
+    default: return state;
+  }
 };
 
 const users = combineReducers({

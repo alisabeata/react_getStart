@@ -70,7 +70,7 @@ replaceReducer(nextReducer)
   
 // - actions creators
   
-// В Redux генераторы действий (action creators) просто возвращают action
+// В Redux генераторы действий (action creators) просто возвращают action (в виде объекта)
 function addTodo(text) {
   return {
     type: ADD_TODO,
@@ -130,6 +130,7 @@ export default (initialState = undefined) => {
 // ./reducers 
 // применяется combineReducers для организации редьюсеров
 // обязательно исп дефолтное значение (state = {}, action)
+// state всегда должен быть простым объектом
 import {combineReducers} from 'redux';
 
 const comments = (state = {}, action) => state;
@@ -142,6 +143,7 @@ export default combineReducers({
 
   
 // можно делать вложенние редьюсеров
+// изменение action.type обрабатывается на любом уровне вложенности
 const comments = (state = {count: 0, comments: []}, action) => {
   switch(action.type) {
     case 'ADD_COMMENT':
@@ -164,4 +166,34 @@ export default combineReducers({
   comments,
   users
 });
+  
+  
+  
+  
+// dispatch with action creators
+  
+import {addComment} from './actions/commentsActions';
+
+const store = createStore();
+
+// without
+/*
+store.dispatch({
+  type: 'ADD_COMMENT', 
+  payload: 'comment text...'
+});
+*/
+
+// with
+store.dispatch(addComment('comment text from payload...'));
+
+// in /actions/commentsActions.js
+    import {ADD_COMMENT} from './commentsTypes';
+
+    export const addComment = payload => ({
+      type: ADD_COMMENT,
+      payload
+    });
+// in /actions/commentsTypes.js
+    export const ADD_COMMENT = 'ADD_COMMENT';
   
