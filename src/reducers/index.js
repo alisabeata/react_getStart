@@ -38,3 +38,6 @@ export default combineReducers({
   comments,
   users
 });
+
+export const getCommentCounts = state => state.comments.count;
+export const getComments = state => state.comments.comments;
