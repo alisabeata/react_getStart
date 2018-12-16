@@ -69,6 +69,13 @@ class App extends PureComponent {
       commentsCount: getCommentCounts(state) // <<< instead state.comments.count
     });
 
+// доп логику какающеюся получения данных рекомендуется выносить в селекторы, прим
+// in reducers/index.js
+    ...
+    export const getComments = state => state.comments.comments;
+    export const getFirst10Comments = state => state.comments.comments.slice(0, 10);
+
+
 
 // result: реализован вывод комментариев
 class App extends PureComponent {
@@ -86,3 +93,44 @@ class App extends PureComponent {
     );
   }
 };
+
+
+// add comments
+class App extends PureComponent {
+  state = {
+    commentBody: ''
+  };
+
+  handleChangeComment = event => {
+    this.setState({commentBody: event.target.value})
+  }
+
+  handleKeyDown = event => {
+    const {addComment} = this.props;
+    const {commentBody} = this.state;
+
+    if (event.keyCode === 13) {
+      addComment(commentBody);
+      this.setState({commentBody: ''});
+    }
+  }
+
+  render() {
+    const {comments} = this.props;
+    console.log(this.props)
+    return (
+      <div>
+        <input 
+          value={this.state.commentBody}
+          onChange={this.handleChangeComment}
+          onKeyDown={this.handleKeyDown} 
+        />
+        {comments.map((comment, i) => (
+          <div key={[comment, i].join('_')}>
+            <p>{comment}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}

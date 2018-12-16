@@ -41,3 +41,4 @@ export default combineReducers({
 
 export const getCommentCounts = state => state.comments.count;
 export const getComments = state => state.comments.comments;
+export const getFirst10Comments = state => state.comments.comments.slice(0, 10);
