@@ -3,11 +3,12 @@
 // надкомпонентное управление состоянием
 
 
+// - store
 // - API/методы
 // - action
 // - actions creators
 // - reducer
-// - store
+
 
 // start
 yarn add redux
@@ -17,6 +18,9 @@ import {createStore} from 'redux';
 const reducer = (state = {}, action) => ({test: 'test'});
 const store = createStore(reducer, {});
 
+
+// - store
+// store — хранилище состояния
 
 // createStore на вход ожидает параметры reducer, state
 createStore(reducer, state);
@@ -36,6 +40,13 @@ store.getState()
 replaceReducer(nextReducer)
 // заменяет редьюсер, который в настоящее время используется хранилищем 
 
+
+// subscribe() возвращает функцию для отмены регистрации слушателя
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+);
+...
+unsubscribe();
 
 
 // - action
@@ -101,9 +112,6 @@ const action = {
 
 store.dispatch(action);
 console.log(store.getState()); // >> {count: 1}
-  
-  
-// - store
 
   
   

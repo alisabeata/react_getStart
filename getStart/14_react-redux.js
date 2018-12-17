@@ -1,9 +1,11 @@
-// module 'react-redux'
+// react-redux
+
 yarn add react-redux
 
 import {Provider, connect} from 'react-redux';
 
-// Provider предоставляет доступ к хранилищу store, передаёт приложению текущее состояние
+
+// - Provider предоставляет доступ к хранилищу store, передаёт приложению текущее состояние
 // Provider работает через контекст
 ReactDOM.render(
   <Provider store={store}>
@@ -12,7 +14,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// connect непосредственно передаёт доступ к состоянию
+
+// - connect непосредственно передаёт доступ к состоянию
 // connect является hoc
 let AppWithRedux = connect()(App);
 
@@ -25,6 +28,7 @@ ReactDOM.render(
 
 // connect при первом вызове ожидает два аргумента mapStateToProps, mapDispatchToProps
 let AppWithRedux = connect(mapStateToProps, mapDispatchToProps)(App);
+
 
 // mapStateToProps берёт сосстояние стейта передаёт в пропс компонента
 // state -- глобальный state редакса
@@ -69,7 +73,7 @@ class App extends PureComponent {
       commentsCount: getCommentCounts(state) // <<< instead state.comments.count
     });
 
-// доп логику какающеюся получения данных рекомендуется выносить в селекторы, прим
+// доп логику каcающеюся получения данных рекомендуется выносить в селекторы, прим
 // in reducers/index.js
     ...
     export const getComments = state => state.comments.comments;
