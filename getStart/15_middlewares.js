@@ -27,6 +27,23 @@ const middleware1 = store => next => action => {
 };
 
 
-
 const result = store.dispatch({type: 'SOME_TYPE'});
 console.log(result); // при наличии мидлвара возвр результат его выполнения
+
+
+// (!) store enhancers подключаются через compose(), напр DevTools, тк им нужна большая функциональность, чем предоставляет applyMiddleware
+import {createStore, applyMiddleware, compose} from 'redux';
+
+
+// чтобы исп compose и middlewares
+export default () =>
+  createStore(
+      rootReducer,
+      initState,
+      compose(
+        applyMiddleware(middleware), 
+        window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+      )
+  );
+
+// compose вызывает каждый аргумент в контексте предыдущего

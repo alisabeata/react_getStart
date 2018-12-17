@@ -9,6 +9,7 @@ const App = () => null;
 
 const result = store.dispatch({type: 'SOME_TYPE'});
 
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
