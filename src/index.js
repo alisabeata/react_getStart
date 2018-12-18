@@ -28,17 +28,24 @@ const fetchEpisodesFailure = () => ({
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchEpisodesRequest();
+    const {isFetched} = this.props;
+    if (isFetched) {
+      this.props.fetchEpisodesRequest();
+    }
   }
 
   render() { 
-    const {isFetching} = this.props;
+    const {episodes, error, isFetching} = this.props;
 
     if (isFetching) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
 
-    return <div />;
+    if (error !== null) {
+      return <div>Error: {error}</div>;
+    }
+
+    return <div>{episodes.map(item => <div key={item.id}>{item.content}</div>)}</div>;
   }
 }
 
