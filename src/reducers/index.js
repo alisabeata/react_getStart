@@ -23,7 +23,7 @@ export default (state = initState, action) => {
       return {...state, isFetching: false, isFetched: true, episodes: action.payload};
 
     case FETCH_EPISODS_FAILURE:
-      return {...state, isFetching: false, error: action.error}
+      return {...state, isFetching: false, isFetched: true, error: action.error}
 
     default:
       return state;

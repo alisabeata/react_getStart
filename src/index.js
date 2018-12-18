@@ -32,6 +32,12 @@ class App extends Component {
   }
 
   render() { 
+    const {isFetching} = this.props;
+
+    if (isFetching) {
+      return <div>Loading...</div>
+    }
+
     return <div />;
   }
 }
