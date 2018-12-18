@@ -9,11 +9,13 @@ const FETCH_EPISODS_FAILURE = 'FETCH_EPISODS_FAILURE';
 const fetchEpisodesRequest = () => ({
   type: FETCH_EPISODS_REQUEST
 });
-const fetchEpisodesSuccess = () => ({
-  type: FETCH_EPISODS_SUCCESS
+const fetchEpisodesSuccess = payload => ({
+  type: FETCH_EPISODS_SUCCESS,
+  payload
 });
-const fetchEpisodesFailure = () => ({
-  type: FETCH_EPISODS_FAILURE
+const fetchEpisodesFailure = error => ({
+  type: FETCH_EPISODS_FAILURE,
+  error
 });
 
 // передача экшена
@@ -72,7 +74,7 @@ class App extends Component {
     class App extends Component {
       componentDidMount() {
         const {isFetched} = this.props;
-        if (isFetched) {
+        if (!isFetched) {
           this.props.fetchEpisodesRequest();
         }
       }
@@ -88,7 +90,7 @@ class App extends Component {
           return <div>Error: {error}</div>;
         }
 
-        return <div>{episodes.map(item => <div key={item.id}>{item.content}</div>)}</div>;
+        return <div>{episodes.map(item => <div key={item.id}>{item.summary}</div>)}</div>;
       }
     }
 
@@ -109,3 +111,35 @@ class App extends Component {
       </Provider>,
       document.getElementById('root')
     );
+
+
+// in store.js
+    const middleware = store => next => action => {
+      if (action.type === FETCH_EPISODS_REQUEST) {
+        fetch('http://api.tvmaze.com/shows/180/episodes', {
+          method: 'GET',
+          mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(episodes => {
+          store.dispatch(
+            fetchEpisodesSuccess(episodes)
+          );
+        })
+        .catch(error => {
+          store.dispatch(
+            fetchEpisodesFailure(error)
+          );
+        });
+      }
+      return next(action);
+    };
+
+    export default () =>
+      createStore(
+          rootReducer, 
+          compose(
+            applyMiddleware(middleware), 
+            window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+          )
+      );

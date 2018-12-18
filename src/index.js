@@ -12,24 +12,16 @@ import {
 const store = createStore();
 
 const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
-const FETCH_EPISODS_SUCCESS = 'FETCH_EPISODS_SUCCESS';
-const FETCH_EPISODS_FAILURE = 'FETCH_EPISODS_FAILURE';
 
 const fetchEpisodesRequest = () => ({
   type: FETCH_EPISODS_REQUEST
-});
-const fetchEpisodesSuccess = () => ({
-  type: FETCH_EPISODS_SUCCESS
-}); 
-const fetchEpisodesFailure = () => ({
-  type: FETCH_EPISODS_FAILURE
 });
 
 
 class App extends Component {
   componentDidMount() {
     const {isFetched} = this.props;
-    if (isFetched) {
+    if (!isFetched) {
       this.props.fetchEpisodesRequest();
     }
   }
@@ -45,7 +37,7 @@ class App extends Component {
       return <div>Error: {error}</div>;
     }
 
-    return <div>{episodes.map(item => <div key={item.id}>{item.content}</div>)}</div>;
+    return <div>{episodes.map(item => <div key={item.id}>{item.summary}</div>)}</div>;
   }
 }
 
