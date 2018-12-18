@@ -1,44 +1,36 @@
 import {combineReducers} from 'redux';
 import {ADD_COMMENT} from '../actions/commentsTypes';
 
-const comments = (state = {count: 0, comments: []}, action) => {
+// mast be in actions/ types
+const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
+const FETCH_EPISODS_SUCCESS = 'FETCH_EPISODS_SUCCESS';
+const FETCH_EPISODS_FAILURE = 'FETCH_EPISODS_FAILURE';
+
+
+const initState = {
+  episodes: [],
+  error: null,
+  isFetching: false,
+  isFetched: false
+};
+
+export default (state = initState, action) => {
   switch(action.type) {
-    case ADD_COMMENT:
-      return ({
-        ...state,
-        comments: [...state.comments, action.payload],
-        count: state.count + 1
-      });
-    default: return state;
+    case FETCH_EPISODS_REQUEST:
+      return {...state, isFetching: true, isFetched: false};
+
+    case FETCH_EPISODS_SUCCESS:
+      return {...state, isFetching: false, isFetched: true, episodes: action.payload};
+
+    case FETCH_EPISODS_FAILURE:
+      return {...state, isFetching: false, error: action.error}
+
+    default:
+      return state;
   }
 };
 
-const count = (state = 0, action) => {
-  switch(action.type) {
-    case 'ADD_USER':
-      return state + 1;
-    default: return state;
-  }
-};
-
-const records = (state = [], action) => {
-  switch(action.type) {
-    case 'ADD_USER':
-      return [...state, action.payload];
-    default: return state;
-  }
-};
-
-const users = combineReducers({
-  count,
-  records
-});
-
-export default combineReducers({
-  comments,
-  users
-});
-
-export const getCommentCounts = state => state.comments.count;
-export const getComments = state => state.comments.comments;
-export const getFirst10Comments = state => state.comments.comments.slice(0, 10);
+export const getEpisodes = state => state.episodes;
+export const getIsFetching = state => state.isFetching;
+export const getIsFetched = state => state.isFetched;
+export const getError = state => state.error;
