@@ -1,3 +1,4 @@
+import {combineReducers} from 'redux';
 import {fetchEpisodesRequest, fetchEpisodesSuccess, fetchEpisodesFailure} from './actions';
 
 const initState = {
