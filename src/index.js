@@ -2,21 +2,15 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store';
 import {Provider, connect} from 'react-redux';
+import {fetchEpisodesRequest} from './actions'
 
 import {
   getEpisodes, 
   getIsFetching, 
   getIsFetched, 
-  getError} from './reducers';
+  getError} from './redusers';
 
 const store = createStore();
-
-const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
-
-const fetchEpisodesRequest = () => ({
-  type: FETCH_EPISODS_REQUEST
-});
-
 
 class App extends Component {
   componentDidMount() {
@@ -37,7 +31,7 @@ class App extends Component {
       return <div>Error: {error}</div>;
     }
 
-    return <div>{episodes.map(item => <div key={item.id}>{item.summary}</div>)}</div>;
+    return <div>{episodes.map(item => <div key={item.id}><img src={item.image.medium} width="50"/><br />{item.summary}</div>)}</div>;
   }
 }
 

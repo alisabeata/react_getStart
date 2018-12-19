@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux';
-import {ADD_COMMENT} from '../actions/commentsTypes';
 
 // mast be in actions/ types
 const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';

@@ -1,25 +1,9 @@
 import {createStore, applyMiddleware, compose} from 'redux';
-import rootReducer from './reducers';
-
-const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
-const FETCH_EPISODS_SUCCESS = 'FETCH_EPISODS_SUCCESS';
-const FETCH_EPISODS_FAILURE = 'FETCH_EPISODS_FAILURE';
-
-const fetchEpisodesRequest = () => ({
-  type: FETCH_EPISODS_REQUEST
-});
-const fetchEpisodesSuccess = payload => ({
-  type: FETCH_EPISODS_SUCCESS,
-  payload
-}); 
-const fetchEpisodesFailure = error => ({
-  type: FETCH_EPISODS_FAILURE,
-  error
-});
-
+import rootReducer from './redusers';
+import {fetchEpisodesRequest, fetchEpisodesSuccess, fetchEpisodesFailure} from './actions';
 
 const middleware = store => next => action => {
-  if (action.type === FETCH_EPISODS_REQUEST) {
+  if (action.type === fetchEpisodesRequest.toString()) {
     fetch('http://api.tvmaze.com/shows/180/episodes', {
       method: 'GET',
       mode: 'cors'
