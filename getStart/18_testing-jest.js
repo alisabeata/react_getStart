@@ -1,6 +1,7 @@
 // testing (jest)
 
 
+// тестируется только самописный код
 // https://jestjs.io
 
 
@@ -89,6 +90,8 @@ example.js
 
 // - describe
 // объединение тестов в блоки
+// describe.skip('name', () => {}) пропустить блок
+// describe.only('name', () => {}) выполнять только этот блок
 describe('example.js', () => {
   it('sum is work', () => {
     expect(sum(1, 2)).toEqual(3);
@@ -172,3 +175,47 @@ it('multipl' , () => {
 });
 
 // .toMatchSnapshot() создаёт папку __snapshot__ с логами выполнения функции
+
+
+
+
+// - test actions
+// если исп redux-action, экшены можно не тестировать
+import {someActions} from '../someActions';
+
+describe('action creator someActions', () => {
+  it('return correct action with type NEW_USER', () => {
+    expect(someActions('test').toEqual({
+      type: 'NEW_USER',
+      payload: 'test'
+    }));
+  });
+});
+
+
+// - test redusers
+import {someReducer} from '../someReducer';
+import {MOVE_ORDERS_TO_SOMEREDUSER} from '../../actions/someTypes';
+import {MOVE_ORDERS_TO_CUSTOMER} from '../../actions/otherTypes';
+
+describe('redures descr', () => {
+  it('action with type MOVE_ORDERS_TO_SOMEREDUSER add action.payload for orders', () => {
+    const next = someReducer(undefined, {
+      type: MOVE_ORDERS_TO_SOMEREDUSER,
+      payload: {name: 'test'}
+    });
+    // проверяет, что новый стейт содержит добавленные элемент, next.order — следующий стейт
+    expect([{name: 'test'}]).toEqual(expect.arrayContaining(next.order));
+  });
+  
+  it('action with type MOVE_ORDERS_TO_SOMEREDUSER add action.payload for orders', () => {
+    const next = someReducer({
+      orders: [{id: 1}]
+    }, {
+      type: MOVE_ORDERS_TO_CUSTOMER,
+      payload: {id: 1}
+    });
+    
+    expect(next.orders).toEqual([]);
+  });
+});

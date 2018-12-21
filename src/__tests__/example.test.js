@@ -20,8 +20,7 @@ describe('example.js', () => {
     ).toBeInstanceOf(Promise);
   });
 
-  it('multipl' , () => {
+  it('multipl' , () => { 
     expect(multipl(100, 100)).toMatchSnapshot();
   });
 });
-
