@@ -107,6 +107,7 @@ function addTodo(text) {
 // - reducer
   
 // обработка экшенов
+// рельюсеры разбиваются по полям в стейте, те для каждого поля/значения свой обработчик
 // reducer — это чистая функция(!), которая принимает предыдущее состояние и действие (state и action) и возвращает следующее состояние (новую версию предыдущего)
 // данные в редьюсере нельзя мутировать!
 // нельзя внутри вызывать не чистые функции, напр Date.now() или Math.random(), тк они генерируют разные значения при вызове, reducer только вычисляет новую версию состояния и возвращать её
@@ -127,30 +128,30 @@ const action = {
 
 store.dispatch(action);
 console.log(store.getState()); // >> {count: 1}
+  
+// split reducers
+  
+// splitedReduser можно заменить combineReducers (about ниже)
+const splitedReduser = (state = initialState, action) => ({
+  balance: balance(state.balance, action),
+  transactions: transactions(state.transactions, action),
+  groups: groups(state.groups, action)
+});
 
+function balance(state = 0, action) {
+  switch (action.type) {
+    case 'ADD_MONEY':
+      return state + action.payload;
+    case 'REMOVE_MONEY':
+      return state - action.payload;
+    case 'PLUS_PERCENTS':
+      return Math.floor(state * 1.1);
+    default state;
+}
+...
+const store = createStore(splitedReduser);
   
-  
-  
-// организация кода
-  
-// в store.js размещается конфигурация хранилища
-// в нём обычно подкл мидлвары для работы с редаксом
-import {createStore, compose} from 'redux';
-import rootReducer from './reducers';
-
-export default (initialState = undefined) => {
-  return createStore(
-    rootReducer,
-    initialState,
-    compose(window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f) // << мидлвар для Redux DevTools
-  );
-};
-  
-// Redux DevTools: https://github.com/zalmoxisus/redux-devtools-extension
-
-  
-  
-// ./reducers 
+// - combineReducers
 // применяется combineReducers для организации редьюсеров
 // обязательно исп дефолтное значение (state = {}, action)
 // state всегда должен быть простым объектом
@@ -189,6 +190,25 @@ export default combineReducers({
   comments,
   users
 });
+  
+  
+// организация кода
+  
+// в store.js размещается конфигурация хранилища
+// в нём обычно подкл мидлвары для работы с редаксом
+import {createStore, compose} from 'redux';
+import rootReducer from './reducers';
+
+export default (initialState = undefined) => {
+  return createStore(
+    rootReducer,
+    initialState,
+    compose(window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f) // << мидлвар для Redux DevTools
+  );
+};
+  
+// Redux DevTools: https://github.com/zalmoxisus/redux-devtools-extension
+
   
   
   
