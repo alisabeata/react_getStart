@@ -15,8 +15,15 @@ yarn add redux
 
 import {createStore} from 'redux';
 
-const reducer = (state = {}, action) => ({test: 'test'});
-const store = createStore(reducer, {});
+const initialState = {};
+const reducer = (state = initialState, action) => {
+  if (action.type === 'SOME_ACTION') {
+    const newVal = 1;
+    return {...state, newVal};// upd state
+  }
+  return state;
+};
+const store = createStore(reducer, initialState);
 
 
 // - store
@@ -92,6 +99,7 @@ function addTodo(text) {
   
 // - reducer
   
+// обработка экшенов
 // reducer — это чистая функция(!), которая принимает предыдущее состояние и действие (state и action) и возвращает следующее состояние (новую версию предыдущего)
 // данные в редьюсере нельзя мутировать!
 // нельзя внутри вызывать не чистые функции, напр Date.now() или Math.random(), тк они генерируют разные значения при вызове, reducer только вычисляет новую версию состояния и возвращать её
