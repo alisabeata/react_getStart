@@ -111,6 +111,8 @@ function addTodo(text) {
 // reducer — это чистая функция(!), которая принимает предыдущее состояние и действие (state и action) и возвращает следующее состояние (новую версию предыдущего)
 // данные в редьюсере нельзя мутировать!
 // нельзя внутри вызывать не чистые функции, напр Date.now() или Math.random(), тк они генерируют разные значения при вызове, reducer только вычисляет новую версию состояния и возвращать её
+// обязательно исп дефолтное значение (state = {}, action)
+// state всегда должен быть простым объектом
   
 const reducer = (state = {count: 0}, action) => {
   switch(action.type) {
@@ -129,15 +131,15 @@ const action = {
 store.dispatch(action);
 console.log(store.getState()); // >> {count: 1}
   
-// split reducers
   
-// splitedReduser можно заменить combineReducers (about ниже)
+// - split reducers
+// splitedReduser можно заменить combineReducers
 const splitedReduser = (state = initialState, action) => ({
   balance: balance(state.balance, action),
   transactions: transactions(state.transactions, action),
   groups: groups(state.groups, action)
 });
-
+  
 function balance(state = 0, action) {
   switch (action.type) {
     case 'ADD_MONEY':
@@ -148,15 +150,28 @@ function balance(state = 0, action) {
       return Math.floor(state * 1.1);
     default state;
 }
-...
+      
+function transactions(state = [], action) {...}
+
+function groups(state = {}, action) {...}
+      
 const store = createStore(splitedReduser);
   
 // - combineReducers
 // применяется combineReducers для организации редьюсеров
-// обязательно исп дефолтное значение (state = {}, action)
-// state всегда должен быть простым объектом
 import {combineReducers} from 'redux';
+      
+// аналог splitedReduser с combineReducers
+const splitedReduser = combineReducers({
+  balance,
+  transactions,
+  groups
+});
+...
+      
 
+// other example
+/*
 const comments = (state = {}, action) => state;
 const users = (state = {}, action) => state;
 
@@ -164,6 +179,7 @@ export default combineReducers({
   comments,
   users
 });
+*/
 
   
 // можно делать вложенние редьюсеров

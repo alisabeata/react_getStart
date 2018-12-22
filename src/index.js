@@ -8,7 +8,7 @@
 //   document.getElementById('root')
 // );
 
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 
 const initialState = {
   balance: 0,
@@ -16,10 +16,10 @@ const initialState = {
   groups: {}
 };
 
-const splitedReduser = (state = initialState, action) => ({
-  balance: balance(state.balance, action),
-  transactions: transactions(state.transactions, action),
-  groups: groups(state.groups, action)
+const splitedReduser = combineReducers({
+  balance,
+  transactions,
+  groups
 });
 
 function balance(state = 0, action) {
