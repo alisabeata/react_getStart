@@ -26,6 +26,13 @@ const reducer = (state = initialState, action) => {
 const store = createStore(reducer, initialState);
 
 
+// в initialState удобно записывать данные из локал сторадж
+
+// общение с сервером
+window.REDUX_INITIAL_STORE = store.getState();
+window.REDUX_INITIAL_STORE = {initialStateData};
+
+
 // - store
 // store — хранилище состояния
 

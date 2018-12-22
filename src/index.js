@@ -42,11 +42,24 @@ const reducer = (state = initialState, action) => {
         ]
       };
 
+    case 'PLUS_PERCENTS':
+      return {
+        ...state,
+        balance: ~~(state.balance * 1.1),
+        transactions: [
+          ...state.transactions,
+          {
+            money: ~~(state.balance * 0.1),
+            descr: 'add 10% percents'
+          }
+        ]
+      };
+
     default:
       return state;
   }
 };
-const store = createStore(reducer);
+const store = createStore(reducer, initialState, window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
 
 console.log(store.getState());
 
@@ -66,6 +79,12 @@ store.dispatch({
   meta: {
     descr: 'payment'
   }
+});
+
+console.log(store.getState());
+
+store.dispatch({
+  type: 'PLUS_PERCENTS'
 });
 
 console.log(store.getState());
