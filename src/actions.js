@@ -1,18 +1,16 @@
-import {createAction, createActions} from 'redux-actions';
+export const FETCH_SHOW_REQUEST = 'FETCH_SHOW_REQUEST';
+export const FETCH_SHOW_SUCCESS = 'FETCH_SHOW_SUCCESS';
+export const FETCH_SHOW_FAILURE = 'FETCH_SHOW_FAILURE';
 
-// export const fetchEpisodesRequest = createAction('FETCH_EPISODES_REQUEST');
-// export const fetchEpisodesSuccess = createAction('FETCH_EPISODES_SUCCESS');
-// export const fetchEpisodesFailure = createAction('FETCH_EPISODES_FAILURE');
+export const fetchShowRequest = () => ({
+  type: FETCH_SHOW_REQUEST
+});
 
-export const {
-  fetchEpisodesRequest,
-  fetchEpisodesSuccess,
-  fetchEpisodesFailure
-} = createActions({
-  FETCH_EPISODES_REQUEST: undefined,
-  FETCH_EPISODES_SUCCESS: [
-    episodes => episodes,
-    episodes => ({length: episodes.length})
-  ],
-  FETCH_EPISODES_FAILURE: undefined
+export const fetchShowSuccess = payload => ({
+  type: FETCH_SHOW_SUCCESS,
+  payload
+});
+
+export const fetchShowFailure = () => ({
+  type: FETCH_SHOW_FAILURE
 });
