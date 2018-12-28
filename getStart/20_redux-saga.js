@@ -59,7 +59,7 @@ export default function* () {
 
 // генератор из второго аргумента лучше выносить из вызова
 
-function* onFetchShowRequest(action) {
+function* onFetchShowRequest() {
   
 }
 
@@ -69,15 +69,86 @@ export default function* () {
 
 
 // - select
-import {takeEvery, select} from 'redux-saga/effects';
+import {select} from 'redux-saga/effects';
 
 // select получает значение из хранилища
 
-function* onFetchShowRequest(action) {
+function* onFetchShowRequest() {
   const showId = yield select(getShowId)
 }
 
 // getShowId is (in redusers.js)
 // export const getShowId = state => state.showId;
 
+// для тестирования нужно проверять, что select вызывается с опред аргументом
+// expect(generatorName.next()).toEqual(select(getShowId))
+
+
+
+// - call
+import {call} from 'redux-saga/effects';
+
+// call удобно использовать для тестирования при вызове промайсов
+// тестируется на наличие аргументов, котор необходимы для формирования промайса
+// expect(generatorName.next()).toEqual(call(fetchShow, showId))
+
+import {fetchShow} from './api';
+
+function* onFetchShowRequest() {
+  const showId = yield select(getShowId);
+  console.log(showId);
+  const show = yield call(fetchShow, showId); // аналог fetchShow(showId)
+  console.log(show);
+}
+
+
+// - put
+import {put} from 'redux-saga/effects';
+
+// put отправляет экшен
+function* onFetchShowRequest() {
+  ...
+  yield put(fetchShowSuccess(show));
+}
+
+
+// - обработка ошибок
+// через try/catch
+function* onFetchShowRequest() {
+  ...
+  try {
+    const show = yield call(fetchShow, showId);
+    yield put(fetchShowSuccess(show));
+  } catch (error) {
+    yield put(fetchShowFailure(error));
+  }
+}
+
+
+// - fork
+import {fork} from 'redux-saga/effects';
+
+// fork используют в рутовой саге
+// нужен для импорта вотчеров (запуска генераторов)
+
+function* onFetchShowWatch() {
+  yield takeEvery(FETCH_SHOW_REQUEST, onFetchShowRequest);
+}
+
+function* onOtherWatch() {
+  yield takeEvery(FETCH_OTHER_REQUEST, onOtherWatchRequest);
+}
+
+export default function* () {
+  yield fork(onFetchShowWatch);
+  yield fork(onOtherWatch);
+}
+
+
+// - takeLatest
+import {takeLatest} from 'redux-saga/effects';
+
+// более предпочтительный аналог takeEvery, тк исп только последний вызов
+// при повторных экшенах/запусках отменяет выполнение
+// до конца исп только тот генератор, который был вызван последним
 

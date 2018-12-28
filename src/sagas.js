@@ -1,13 +1,21 @@
-import {takeEvery, select} from 'redux-saga/effects';
-import {FETCH_SHOW_REQUEST} from './actions';
+import {takeEvery, select, call, put} from 'redux-saga/effects';
+import {
+  FETCH_SHOW_REQUEST, 
+  fetchShowSuccess,
+  fetchShowFailure
+} from './actions';
 import {getShowId} from './redusers';
 import {fetchShow} from './api';
 
-function* onFetchShowRequest(action) {
+function* onFetchShowRequest() {
   const showId = yield select(getShowId);
-  console.log(showId);
-  const show = yield fetchShow(showId);
-  console.log(show);
+  
+  try {
+    const show = yield call(fetchShow, showId);
+    yield put(fetchShowSuccess(show));
+  } catch (error) {
+    yield put(fetchShowFailure(error));
+  }
 }
 
 export default function* () {

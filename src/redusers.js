@@ -7,7 +7,7 @@ export default (state = {showId: 666, show: null}, action) => {
   console.log(state, action);
   switch (action.type) {
     case FETCH_SHOW_SUCCESS:
-      return {...state, show: action.payload}
+      return {...state, show: action.payload};
     default:
       return state;
   }

@@ -11,6 +11,7 @@ export const fetchShowSuccess = payload => ({
   payload
 });
 
-export const fetchShowFailure = () => ({
-  type: FETCH_SHOW_FAILURE
+export const fetchShowFailure = error => ({
+  type: FETCH_SHOW_FAILURE,
+  error
 });
