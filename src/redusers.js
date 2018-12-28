@@ -1,16 +1,15 @@
-import {
-  FETCH_SHOW_REQUEST, 
-  FETCH_SHOW_SUCCESS, 
-  FETCH_SHOW_FAILURE} from './actions';
+import {fetchShowSuccess} from './actions';
+import {handleActions} from 'redux-actions';
+import {combineReducers} from 'redux';
 
-export default (state = {showId: 666, show: null}, action) => {
-  console.log(state, action);
-  switch (action.type) {
-    case FETCH_SHOW_SUCCESS:
-      return {...state, show: action.payload};
-    default:
-      return state;
-  }
-};
+const showId = handleActions({}, 666);
+const show = handleActions({
+  [fetchShowSuccess]: (state, action) => action.payload
+}, null);
+
+export default combineReducers({
+  showId,
+  show
+});
 
 export const getShowId = state => state.showId;

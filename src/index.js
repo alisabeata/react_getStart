@@ -9,6 +9,8 @@ const store = createStore();
 
 store.dispatch(fetchShowRequest());
 
-console.log(store.getState());
+store.subscribe(() => {
+  console.log(store.getState());
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));

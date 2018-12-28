@@ -1,6 +1,6 @@
 import {takeEvery, select, call, put} from 'redux-saga/effects';
 import {
-  FETCH_SHOW_REQUEST, 
+  fetchShowRequest, 
   fetchShowSuccess,
   fetchShowFailure
 } from './actions';
@@ -19,5 +19,5 @@ function* onFetchShowRequest() {
 }
 
 export default function* () {
-  yield takeEvery(FETCH_SHOW_REQUEST, onFetchShowRequest);
+  yield takeEvery(fetchShowRequest, onFetchShowRequest);
 }

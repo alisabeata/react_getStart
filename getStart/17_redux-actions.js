@@ -90,6 +90,19 @@ export const {
 // >>> пример: VIDEO/FETCH_EPISODES_REQUEST
 
 
+// (!) при записи можно опускать undefined
+FETCH_EPISODES_REQUEST: undefined === 'FETCH_EPISODES_REQUEST'
+
+export const {
+  fetchShowRequest, 
+  fetchShowSuccess, 
+  fetchShowFailure} = createActions(
+    'FETCH_SHOW_REQUEST',
+    'FETCH_SHOW_SUCCESS',
+    'FETCH_SHOW_FAILURE'
+  );
+
+
 
 // - handleAction
 // обработка экшена

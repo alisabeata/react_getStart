@@ -39,6 +39,11 @@ window.REDUX_INITIAL_STORE = {initialStateData};
 // createStore на вход ожидает параметры reducer, state
 createStore(reducer, state);
 
+// подписка на события стора
+store.subscribe(() => {
+  console.log(store.getState());
+});
+
 
 // - API/методы
 

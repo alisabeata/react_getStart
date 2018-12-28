@@ -1,17 +1,10 @@
-export const FETCH_SHOW_REQUEST = 'FETCH_SHOW_REQUEST';
-export const FETCH_SHOW_SUCCESS = 'FETCH_SHOW_SUCCESS';
-export const FETCH_SHOW_FAILURE = 'FETCH_SHOW_FAILURE';
+import {createActions} from 'redux-actions';
 
-export const fetchShowRequest = () => ({
-  type: FETCH_SHOW_REQUEST
-});
-
-export const fetchShowSuccess = payload => ({
-  type: FETCH_SHOW_SUCCESS,
-  payload
-});
-
-export const fetchShowFailure = error => ({
-  type: FETCH_SHOW_FAILURE,
-  error
-});
+export const {
+  fetchShowRequest, 
+  fetchShowSuccess, 
+  fetchShowFailure} = createActions(
+    'FETCH_SHOW_REQUEST',
+    'FETCH_SHOW_SUCCESS',
+    'FETCH_SHOW_FAILURE'
+  );
