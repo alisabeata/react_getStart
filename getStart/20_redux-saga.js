@@ -5,8 +5,8 @@ yarn add redux-saga
 
 import createSagaMiddleware from 'redux-saga'; 
 
-
-// слой в моддлварах, который имеет доступ к стейту, может реагировать/диспатчить экшены
+// cаги подключаются как middleware, и работают в своем слое
+// имеют доступ к стейту, могут реагировать/диспатчить экшены
 // полезна для описания сетевых запросов, инпут-аутпут операций, работы с локальным кэшем
 // те убирает побочные эффекты и нечистые функции из приложения на уровень отдельного слоя
 // взаимодействует только с экшенз
@@ -152,3 +152,61 @@ import {takeLatest} from 'redux-saga/effects';
 // при повторных экшенах/запусках отменяет выполнение
 // до конца исп только тот генератор, который был вызван последним
 
+
+
+
+// takeEvery и takeLatest явл высокоуровневыми функциями, которые работают поверх медотов
+
+// пример реализации takeEvery
+// для этого исп методы take, fork
+import {take, fork} from 'redux-saga/effects';
+
+export default function* takeEvery(
+  pattern,
+  saga,
+  ...args
+) {
+  while (true) {
+    const action = yield take(pattern)
+    yield fork(saga, ...args.concat(action))
+  }
+}
+
+
+// в сагах есть два типа эффектов -- блокирующие и не блокирующие
+// take -- блокирующий
+// fork -- не блокирующий
+
+
+// реализация лоадера через саги
+// привязывается к типу экшена
+export default function* pageLoaderFlow() {
+  while (true) {
+    yield take(({type: pattern}) => pattern.includes('_REQUEST'));
+    let count = 1;
+    
+    yield put({type: 'LOADER/START_PAGE_LOADER'});
+    
+    while (count !== 0) {
+      const action = yield take(
+        ({type: pattern}) => 
+          pattern.includes('_REQUEST') ||
+          pattern.includes('_FAILURE') ||
+          pattern.includes('_SUCCESS')
+      );
+      
+      if (action.type.includes('_REQUEST')) {
+        count += 1;
+      } else {
+        count -= 1;
+      }
+      
+      yield put({
+        type: 'PROGRESS_PAGE_LOADER',
+        payload: count
+      });
+    }
+    
+    yield put({type: 'LOADER/STOR_PAGE_LOADER'});
+  }
+}
