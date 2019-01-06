@@ -12,12 +12,29 @@ store.subscribe(() => {
   console.log(store.getState());
 });
 
-const showSchema = new schema.Entity('show');
+const characterSchema = new schema.Entity('character');
+const personSchema = new schema.Entity('person');
 
-fetch('http://api.tvmaze.com/shows/1?embed=cast', {
+const showSchema = new schema.Entity('show', {
+  _embedded: {
+    cast: new schema.Array({
+      person: personSchema,
+      character: characterSchema
+    })
+  }
+});
+
+
+fetch('http://api.tvmaze.com/shows/100?embed=cast', {
   cors: true
 })
   .then(response => response.json())
-  .then(show => console.log(normalize(show, showSchema)));
+  .then(show => {
+    store.dispatch({
+      type: 'SHOW_SUCCESS',
+      payload: normalize(show, showSchema)
+    });
+    console.log(normalize(show, showSchema));
+  });
 
 ReactDOM.render(<App />, document.getElementById('root'));
