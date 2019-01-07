@@ -16,3 +16,5 @@ fetch('http://api.tvmaze.com/shows/1?embed=cast', {
 })
   .then(response => response.json())
   .then(show => console.log(normalize(show, showSchema)));
+
+// нормализацию данных, обычно, располагают на уровне action creators

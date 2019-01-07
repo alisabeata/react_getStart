@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import createStore from './store';
 import {normalize, schema} from 'normalizr';
+import axios from 'axios';
 
 
 const store = createStore();
@@ -25,10 +26,8 @@ const showSchema = new schema.Entity('show', {
 });
 
 
-fetch('http://api.tvmaze.com/shows/100?embed=cast', {
-  cors: true
-})
-  .then(response => response.json())
+axios
+  .get('http://api.tvmaze.com/shows/100?embed=cast')
   .then(show => {
     store.dispatch({
       type: 'SHOW_SUCCESS',
