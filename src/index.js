@@ -26,8 +26,10 @@ const showSchema = new schema.Entity('show', {
 });
 
 
-axios
-  .get('http://api.tvmaze.com/shows/100?embed=cast')
+fetch('http://api.tvmaze.com/shows/100?embed=cast', {
+  cors: true
+})
+  .then(response => response.json())
   .then(show => {
     store.dispatch({
       type: 'SHOW_SUCCESS',
