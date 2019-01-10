@@ -9,6 +9,7 @@
 // https://circleci.com/ аналог Travis
 
 // https://www.netlify.com/ free хостинг
+// https://www.scaleway.com/ дешёвый хостинг
 
 
 // in .travis.yml
