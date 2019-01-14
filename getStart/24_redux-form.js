@@ -111,6 +111,8 @@ renderInput = field => {
 
 // - валидация
 // валидация с material-ui (доп слой для redux-form): https://redux-form.com/8.1.0/examples/material-ui/
+
+// исп либо валидация по филд либо по сабмиту, не вместе
                 
 // валидация по сабмиту
 import {SubmissionError} from 'redux-form';
@@ -139,9 +141,29 @@ handleValidate = values => {
 
 
 // валидация по Field
+handleTextareaValidate = (value, allValues) => {
+  console.log(value, allValues)
+};
+... 
+<Field name="notes" validate={this.handleTextareaValidate} component="textarea" />
 
-
-
+  
+  
+// - нормализация
+// реализуется с помощью пропсы normalize при отправке
+<Field 
+  name="notes" 
+  normalize={value => value.trim()} 
+  component="textarea" 
+/>
+// с помощью format нормализуется данные при получении
+<Field 
+  name="notes" 
+  format={value => !value ? '' : value.trim()} 
+  component="textarea" 
+/>
+  
+  
                 
 // - FormSection
 // позволяет создавать вложенность у объектов
@@ -170,3 +192,26 @@ import {FieldArray} from 'redux-form';
 renderColor = (member, index , field) => {}    
 
 <FieldArray name="colors" component={this.renderColor} />
+
+
+
+// - запись значений через стейт
+const selector = formatValueSelector('simple');
+
+let EnchancedForm = connect(state => ({
+  firstName: selector(state, 'main.firstName') // << запись firstName из state
+}))(SimpleForm);
+
+EnchancedForm = reduxForm({
+  form: 'simple'
+})(EnchancedForm);
+
+// - запись значений с помощью change
+let EnchancedForm = connect(state => ({
+  firstName: selector(state, 'main.firstName')
+}), {change})(SimpleForm);
+
+componentDidMount() {
+  this.props.change('simple', 'main.lastName', 'Some value')
+}
+

@@ -5,6 +5,7 @@ import './index.css';
 import {Provider} from 'react-redux';
 import createStore from './store';
 import {FormSection, FieldArray, SubmissionError, Field, reduxForm} from 'redux-form';
+import { all } from 'redux-saga/effects';
 
 const store = createStore();
 
@@ -51,6 +52,13 @@ class SimpleForm extends PureComponent {
     }
 
     return errors;
+  };
+
+  handleTextareaValidate = (value, allValues) => {
+    //console.log(value, allValues);
+    if (allValues && allValues.main && allValues.main.email && !value) {
+      return 'Notes is required';
+    }
   };
 
   render() {
@@ -110,7 +118,11 @@ class SimpleForm extends PureComponent {
         <div>
           <label>Notes</label>
           <div>
-            <Field name="notes" component="textarea" />
+            <Field name="notes" 
+              validate={this.handleTextareaValidate} 
+              normalize={value => value.trim()}
+              format={value => !value ? '' : value.trim()}
+              component="textarea" />
           </div>
         </div>
         <div>
