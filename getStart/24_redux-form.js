@@ -214,4 +214,3 @@ let EnchancedForm = connect(state => ({
 componentDidMount() {
   this.props.change('simple', 'main.lastName', 'Some value')
 }
-
