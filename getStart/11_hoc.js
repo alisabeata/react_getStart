@@ -86,7 +86,6 @@ compose(fn, fn1, fn2)(x)
 // compose()() метод Recompose
 // Recompose — это библиотека с уже готовыми компонентами высшего порядка
 // https://github.com/acdlite/recompose
-// https://habr.com/company/raiffeisenbank/blog/354768/
 
 
 
