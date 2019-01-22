@@ -56,6 +56,7 @@ render() {
 // -- componentDidMount()
 // вызывается сразу же после вызова функции render и монтировании компонента к DOM
 // вызов сетевых запросов, подключение сторинних библиотек к через обращение к DOM-элементу, интервалы, подключение листенеров (addEventListener к window)
+// componentDidMount не вызывается при сервер-сайд рендеринге
 componentDidMount() {
   fetch().then(data => {
     this.setState({isLoading: false, data: data})
