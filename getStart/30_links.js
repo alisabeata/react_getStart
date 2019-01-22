@@ -22,3 +22,7 @@
 // - react.rocks 
 // примеры проектов на реакт
 // https://react.rocks/
+
+// - nextjs (server-side-rendering)
+// https://nextjs.org
+// https://github.com/zeit/next.js/
