@@ -1,25 +1,44 @@
-//start
+// start
 
 
 yarn create react-app my-app
+
+
+// (!) в react важно использовать иммутабельные данные
 
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends Component {
-  return (<div>...</div>);
+  render() {
+    return <div />;
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
   
   
 // основные концепции
-// - Virtual DOM
-// - Компонентная разработка
 // - JSX
+// - Virtual DOM
+// - Компоненты
+
+// основные способы передачи данных
+// - state (внутреннее состояние)
+// - props (аргументы компоненты)
+
   
-// (!) важно использовать иммутабельные данные
+// для props рекомендуется объявл переменные в рендере
+render() {
+  const {color, data} = this.props; // <<
+  return (
+    <div>
+      <FirstChild color={color} data={data} />
+    </div>
+  );
+}
+
 
   
 // Можно исп Component или PureComponent, а так же обычные функции (в этом случае нет state)
@@ -27,8 +46,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // если props остались прежними, компонента не будет заново создавать свой virtual dom слепок, и реакт будет использовать прежний слепок. 
 // https://medium.com/frontend-notes/purecomponent-%D0%B8-components-5c15cf206ba7
 
-
-// example
+  
+// пример компоненты
 class Time extends Component {
   render() {
     const nowDate = new Date().toString();
@@ -48,30 +67,31 @@ class Time extends Component {
 }
 
 
-// рекомендуется объявл переменные для пропс
-render() {
-  const {color, data} = this.props; // <<
-  return (
-    <div>
-      <FirstChild color={color} data={data} />
-    </div>
-  );
-}
+// - условия в скобочных группах jsx
+{condition && <span>Rendered when truthy</span>}
+{condition && <SomeComponent />}
+
+// в jsx доступен только тернарный оператор
+
+// - перечесление св-в в jsx
+<ul>
+  {items.map((item, ind) => (
+    <li key={ind}>{item.title}</li>
+  ))}
+</ul>
 
 
-// если super вызывается с props, то внутри конструктора доступно this.props
+
+// (!) если super вызывается с props, то внутри конструктора доступно this.props
 constructor(props) {
   super();
   super(props);
 }
 
 
-
-
-
-// url request
+// (пример) url request
 constructor(props) {
-  super(props);
+  super();
   this.state = {
     isLoading: true,
     data: []
@@ -86,18 +106,12 @@ componentDidMount() {
 
 render() {
   const {isLoading, data} = this.state;
-  
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  
+  if (isLoading) return <p>Loading...</p>;
   return <div>{data}</div>;
 }
 
 
-
-
-// если запрос в процессе обработки, а компонента отмонтирвана (пользователь нажал активировал др компонент), то фиксится
+// (пример) если запрос в процессе обработки, а компонента отмонтирвана (пользователь нажал активировал др компонент), то фиксится так
 constructor(props) {
   ...
   this._isMounted = false;
@@ -118,9 +132,7 @@ componentWillUnmount() {
 
 
 
-
-
-// обработка ошибок у child-компонентов
+// (пример) обработка ошибок у child-компонентов
 state = {
   error: null,
   errorInfo: null
@@ -133,7 +145,7 @@ componentDidCatch(error, info) {
   });
 }
 
-// parent render
+// (пример) parent render
 render() {
   if (counter === 3) {
     throw new Error('error!');
@@ -142,7 +154,7 @@ render() {
   return <div>{counter}</div>;
 }
 
-// child render
+// (пример) child render
 render() {
   const {counter, error} = this.state;
   
@@ -155,8 +167,7 @@ render() {
 
   
   
-  
-// создание темплейта, передача children узла
+// (пример) создание темплейта, передача children узла
 render() {
   return (
     <div>
@@ -174,7 +185,7 @@ function Title(props) {
   );
 }
   
-// для нескольких children исп React.Children.map, map Array не подходит, тк может быть одно значение, которое не будет являться массивом 
+// (пример) для нескольких children исп React.Children.map, map Array не подходит, тк может быть одно значение, которое не будет являться массивом 
 function Title(props) {
   return (
     <div>
