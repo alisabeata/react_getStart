@@ -56,7 +56,7 @@ class App extends Component {
 // стоит исп для установки фокуса на элемент, манипуляцией с video, audio тегами, возова анимации привязанной к координатам, когда нужно взамодействовать с др библиотеками
 // вызывается после componentDidMount child-компонента, но до componentDidMount parent
 
-//----- экземпляр класса Button
+// экземпляр класса Button
 class Button extends Component {
   render () {
     const {children} = this.props;
@@ -79,7 +79,7 @@ class App extends Component {
 }
 
 
-//---- setStateFromParent
+// setStateFromParent
 class Button extends Component {
   state = {
     color: 'red'
