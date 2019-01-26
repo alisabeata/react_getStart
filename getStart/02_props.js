@@ -51,3 +51,13 @@ render() {
     </div>
   );
 }
+
+
+// - внутренеее содержание компоненты
+<Component>Some content</Component>
+
+class Component ... {
+  render() {
+    {this.props.children} // >> 'Some content'
+  }
+}

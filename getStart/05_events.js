@@ -1,10 +1,28 @@
-// jsx
-
 // events
+
+
 // https://reactjs.org/docs/events.html
 // в реакте используются synthetic event
 
-// onClick, onContextMenu, onDoubleClick, onDrag, onDragEnd, onDragEnter, onDragExit, onDragLeave, onDragOver, onDragStart, onDrop, onMouseDown, onMouseEnter, onMouseLeave, onMouseMove, onMouseOut, onMouseOver, onMouseUp.
+// onClick
+// onContextMenu
+// onDoubleClick
+// onDrag
+// onDragEnd
+// onDragEnter
+// onDragExit 
+// onDragLeave
+// onDragOver 
+// onDragStart
+// onDrop
+// onMouseDown
+// onMouseEnter
+// onMouseLeave
+// onMouseMove
+// onMouseOut
+// onMouseOver
+// onMouseUp
+
 handleOnChange = event => {
  this.setState({value: event.target.value});
 };
