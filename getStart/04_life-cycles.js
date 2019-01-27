@@ -1,35 +1,38 @@
 // life cycles
 
 
-// Монтирование компоненты:
+// монтирование компоненты
 // - constructor(props)
-// - componentWillMount()
+// - (new) static getDerivedStateFromPops() // с 16 версии
+// - (old) componentWillMount()
 // - render()
 // - componentDidMount()
 
-// Обновление компоненты:
-// - componentWillReceiveProps(nextProps)
+// обновление
+// - (new) static getDerivedStateFromPops() // с 16 версии
+// - (old) componentWillReceiveProps(nextProps)
 // - shouldComponentUpdate(nextProps, nextState)
-// - componentWillUpdate(nextProps, nextState)
+// - (old) componentWillUpdate(nextProps, nextState)
 // - render()
+// - (new) getSnapshotBeforeUpdate() // с 16 версии
 // - componentDidUpdate(prevProps, prevState)
 
-// Удаление компоненты:
+// удаление (unmounting)
 // - componentWillUnmount()
 
-// Ошибки:
+// ошибки
 // - componentDidCatch(error, info)
 
-
-// Доп методы, переменные:
+// доп методы, переменные
 // - forceUpdate()
 // - defaultProps
 // - displayName
 
 
-// ----------------------------------
+// (!) componentWillUpdate, componentWillMount, componentWillReceiveProps в 17 версии будут деприкейтед, не рекомендуется использовать
 
-// -- constructor(props)
+
+// - constructor(props)
 // вызывается монтированием компоненты к DOM
 // обычно используется для инициализации state компоненты
 constructor(props) {
@@ -40,12 +43,16 @@ constructor(props) {
   };
 }
 
-// -- componentWillMount() 
+// - (new) static getDerivedStateFromPops()
+// нужен для пердварительных вычислений от пропсов, с последующей передачей значения в стейт
+static getDerivedStateFromPops()
+
+// - (old) componentWillMount() 
 //* мало используется, функционал заменяется другими методами
 // вызывается непосредственно перед монтированием и render
-componentWillMount() {...}
+componentWillMount()
 
-// -- render()
+// - render()
 // обязательная, остальные опциональны
 // должна возвращать jsx, string, number, null, boolean или портал
 // если возвращается boolean значение или null, то компонент не будет отрендерен
@@ -53,9 +60,9 @@ render() {
   return '<div>...</div>';
 }
 
-// -- componentDidMount()
+// - componentDidMount()
 // вызывается сразу же после вызова функции render и монтировании компонента к DOM
-// вызов сетевых запросов, подключение сторинних библиотек к через обращение к DOM-элементу, интервалы, подключение листенеров (addEventListener к window)
+// вызов сетевых запросов, подключение сторинних библиотек к через обращение к DOM-элементу, интервалы, подключение листенеров (addEventListener к window), видеоплееров
 // componentDidMount не вызывается при сервер-сайд рендеринге
 componentDidMount() {
   fetch().then(data => {
@@ -72,29 +79,34 @@ componentDidMount() {
 }
 
 
-// -- componentWillReceiveProps(nextProps)
+// - (old) componentWillReceiveProps(nextProps)
 // вызывается каждый раз, когда компонент получает новые props, обычно исп для обновления значений state, которые зависят от props
 componentWillReceiveProps(nextProps) {
   this.state // old walue
   nextProps // next
 }
 
-// -- shouldComponentUpdate(nextProps, nextState)
+// - shouldComponentUpdate(nextProps, nextState)
 // вызывается перед функцией render, и не вызывается в самый первый раз при монтировании
 // сообщает реакту, нужно ли вызывать функцию render для компоненты, когда у нее изменились её props или state, функция должна вернуть boolean (default: true)
-// if return false -- componentWillUpdate, render и compoentDidUpdate не будут вызваны
+// if return false — componentWillUpdate, render и compoentDidUpdate не будут вызваны
 shouldComponentUpdate(nextProps, nextState) {
   return this.props.products !== nextProps.products; // пример исп с условием для списка
 }
 
-// -- componentWillUpdate(nextProps, nextState)
+// - (old) componentWillUpdate(nextProps, nextState)
 // вызывается непосредственно перед обновлением компоненты и вызовом render
 // нельзя вызывать setState, метод позволяет сделать подготовки перед обновлением
 componentWillUpdate(nextProps, nextState) {
   this.isUpdate = true; // например, исп для обновления статуса внутри компонента
 }
+
+// - (new) getSnapshotBeforeUpdate()
+// вызывается непоср перед ререндером, можно получить данные от DOM
+// нужен в основном для работы с DOM
+getSnapshotBeforeUpdate()
                       
-// -- componentDidUpdate(prevProps, prevState)
+// - componentDidUpdate(prevProps, prevState)
 // вызывается сразу после render
 // не вызывается после первого вызова render, используется для того, чтобы изменять DOM в зависимости от props компоненты
 componentDidUpdate(prevProps, prevState) {
@@ -103,7 +115,7 @@ componentDidUpdate(prevProps, prevState) {
 }
 
 
-// -- componentWillUnmount()
+// - componentWillUnmount()
 // метод вызывается перед тем, как компонент отмонтируется от DOM и будет уничтожен
 // в этом методе отключают eventListener, если они есть и отменяют сетевые запросы
 componentWillUnmount() {
@@ -112,10 +124,12 @@ componentWillUnmount() {
   window.removeEventListener('resize', this.handleResize);
 }
 
-// -- componentDidCatch(error, info)
-// вызывается при наличии ошибки в child-компонентах
+// - componentDidCatch(error, info)
+// нужен для того чтобы ловить ошибки рендера
+// отлавливает только ошибки child-компонент
 // можно вызвать setState и отразить в ui наличие ошибки
-componentDidCatch(error, info) {...} 
+componentDidCatch(error, info) {...}
+
 
 
 // - forceUpdate()
