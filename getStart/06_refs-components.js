@@ -114,15 +114,33 @@ class App extends Component {
 
 // ref для работы с DOM
 // (например для video, audio)
+
+// (old method)
 class App extends Component {
   componentDidMount() {
-    console.log(this.div) // >>> <div></div>
+    console.log(this.div) // >> <div></div>
     this.div.style = ...;
   }
 
   render() {
     return (
-      <div ref={c => (this.div = c)></div>
+      <div ref={c => (this.div = c)}></div>
+    );
+  }
+}
+
+// (new) with React.createref()
+class App extends Component {
+  div = React.createref();
+
+  componentDidMount() {
+    console.log(this.div) // >> <div></div>
+    this.div.style = ...;
+  }
+
+  render() {
+    return (
+      <div ref={this.div}></div>
     );
   }
 }
