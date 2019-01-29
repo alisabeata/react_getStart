@@ -130,3 +130,25 @@ render() {
     </div>
   );
 }
+
+
+// or
+
+state = {
+  inputs: {
+    email: '',
+    firstName: '',
+    lastName: '',
+  }
+};
+
+handleChange = event => {
+  const {name, value} = event.target;
+  
+  this.setState(state => ({
+    inputs: {
+      ...state.inputs,
+      [name]: value
+    }
+  }));
+};

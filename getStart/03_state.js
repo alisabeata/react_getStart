@@ -77,3 +77,25 @@ class App extends Component {
 
   render() {}
 }
+
+
+
+// state с вложенными значениями
+state = {
+  inputs: {
+    email: '',
+    firstName: '',
+    lastName: '',
+  }
+};
+
+handleChange = event => {
+  const {name, value} = event.target;
+  
+  this.setState(state => ({
+    inputs: {
+      ...state.inputs,
+      [name]: value
+    }
+  }));
+};
