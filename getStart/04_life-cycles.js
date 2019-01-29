@@ -3,13 +3,13 @@
 
 // монтирование компоненты
 // - constructor(props)
-// - (new) static getDerivedStateFromPops() // с 16 версии
+// - (new) static getDerivedStateFromProps(nextProps, prevState) // с 16 версии
 // - (old) componentWillMount()
 // - render()
 // - componentDidMount()
 
 // обновление
-// - (new) static getDerivedStateFromPops() // с 16 версии
+// - (new) static getDerivedStateFromProps(nextProps, prevState) // с 16 версии
 // - (old) componentWillReceiveProps(nextProps)
 // - shouldComponentUpdate(nextProps, nextState)
 // - (old) componentWillUpdate(nextProps, nextState)
@@ -44,10 +44,10 @@ constructor(props) {
   };
 }
 
-// - (new) static getDerivedStateFromPops()
+// - (new) static getDerivedStateFromProps()
 // нужен для пердварительных вычислений от пропсов, с последующей передачей значения в стейт
 // static говорит о том, что this.state/this.setState не доступны из метода
-static getDerivedStateFromPops()
+static getDerivedStateFromProps()
 
 // - (old) componentWillMount() 
 //* мало используется, функционал заменяется другими методами

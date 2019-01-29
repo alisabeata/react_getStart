@@ -43,6 +43,7 @@ handleClick = event => {
   });
 }
 
+// (!) this.setState() при работе с сетью (fetch) можно использовать только когда компонента примонтирована (в componentDidMount)
 
 // (важно!) иммутабельность при передачи параметров
 const newTodo = {id: 11, value: 'val', done: false};

@@ -59,7 +59,7 @@ class App extends Component {
   }
 }
 
-// event bubbling
+// - event bubbling
 // второй способ повесить обработчик на родителя, который будет срабатывать при клике на child
 class Button extends Component {
   render () {
@@ -88,7 +88,7 @@ class App extends Component {
 // метод event.persist сообщает реакту, что это событие не нужно очищать и переиспользовать
 
 
-// Списки и keys
+// - Списки и keys
 
 // для элементов генерируемых методом map необходимо присваивать уникальный аттрибут key
 render() {
@@ -97,6 +97,36 @@ render() {
       <ul>
         {list.map(el => <li key={el.id}>{el.text}</li>)}
       </ul>
+    </div>
+  );
+}
+
+
+// запись в стейт знач инпута
+state = {
+  email: '',
+  firstName: '',
+  lastName: '',
+};
+
+handleChange = event => {
+  this.setState({
+    [event.target.name]: event.target.value
+  });
+};
+
+render() {
+  return (
+    <div>
+      {Object.keys(this.state).map(fieldName => (
+        <input 
+          key={fieldName}
+          name={fieldName}
+          value={this.state[fieldName]}
+          placeholder={fieldName.toUpperCase()}
+          onChange={this.handleChange}
+        /> 
+      ))}
     </div>
   );
 }

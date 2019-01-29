@@ -2,9 +2,7 @@
 
 // в proptypes описываются все зависимоти, необходимые для работы компонента
 
-// init
-// > 16v react
-| yarn add prop-types
+yarn add prop-types
 
 import PropTypes from 'prop-types';
 
