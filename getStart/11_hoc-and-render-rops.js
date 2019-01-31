@@ -5,49 +5,35 @@
 // компонент, который принимает компонент и возвращает компонент
 // аналогично higher order functions функциям высшего порядка
 
-
-function pureHOC(wrapperdComponent) {
-  return class pureHOC extends PureComponent {
-    render() {
-      return React.createElement(wrapperdComponent, this.props);
-    }
-  }
-}
-
-function App({greeting}) {
-  return <h1>{greeting}</h1>;
-}
-
-App.defaultProps = {
-  greeting: 'Empty greeting'
+const Stateless = () => {
+  return <p>stateless component</p>;
 };
 
-App = pureHOC(App);
-
-ReactDOM.render(<App greeting="hello" />, document.getElementById('root'));
-
-
-// with jsx
-function pureHOC(WrapperdComponent) {
-  return class pureHOC extends PureComponent {
-    render() {
-      return <WrapperdComponent {...this.props} />
+function pureHOC(wrappedComponent) {
+  return (
+    class pureHOC extends PureComponent {
+      static displayName = 'PureHOC'; // нужно для отображения имени компоненты в реакт дев тулз
+      render() {
+        return <wrappedComponent {...this.props} />;
+      }
     }
-  }
+  );
 }
+
+const PureStateless = pureHOC(Stateless);
+
+// (из примера) полезно для добавления функциональности к стейтлес компонентам (что экономит код)
+// pureHOC при подключении выносится в отдельный модуль
+import pureHOC
 
 
 
 // get width with HOC
-function withWindowWidthHOC(WrapperdComponent) {
+function withWindowWidthHOC(wrappedComponent) {
   return class WithWindowWidthHOC extends PureComponent {
-    constructor(props) {
-      super();
-
-      this.state = {
-        width: window.innerWidth
-      };
-    }
+    state = {
+      width: window.innerWidth
+    };
 
     handleResize = () => {
       this.setState({width: window.innerWidth});
@@ -63,7 +49,7 @@ function withWindowWidthHOC(WrapperdComponent) {
 
     render() {
       const {width} = this.state;
-      return <WrapperdComponent {...this.props} width={width} />
+      return <wrappedComponent {...this.props} width={width} />
     }
   }
 }
@@ -91,6 +77,11 @@ compose(fn, fn1, fn2)(x)
 
 // - render props
 // передача метода render компоненты
+
+// применимо при выводе функционала компоненты на уровень выше, для передачи вычисляемых значений
+
+// render props заменяет функциональность hoc
+
 class WithWindowWidth extends Component {
   state = {
     width: window.innerWidth
