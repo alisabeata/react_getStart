@@ -28,7 +28,6 @@ ReactDOM.render(<App greeting="hello" />, document.getElementById('root'));
 
 
 // with jsx
-
 function pureHOC(WrapperdComponent) {
   return class pureHOC extends PureComponent {
     render() {
@@ -91,17 +90,11 @@ compose(fn, fn1, fn2)(x)
 
 
 // - render props
-
-// передача метода рендер компонента
-
+// передача метода render компоненты
 class WithWindowWidth extends Component {
-  constructor(props) {
-    super();
-
-    this.state = {
-      width: window.innerWidth
-    };
-  }
+  state = {
+    width: window.innerWidth
+  };
 
   handleResize = () => {
     this.setState({width: window.innerWidth});
@@ -117,21 +110,13 @@ class WithWindowWidth extends Component {
 
   render() {
     const {width} = this.state;
-    const {render} = this.props;
-    return render({width});
+    return this.props.render({width});
   }
 }
 
-function App({greeting, width}) {
-  return <h1>{greeting}{width}</h1>;
-}
-
-App.defaultProps = {
-  greeting: 'Empty greeting'
-};
-
-ReactDOM.render(
-  <WithWindowWidth render={({width}) => 
-    <App greeting="hello" width={width} />
-  } />,
-  document.getElementById('root'));
+export default () => (
+  <div>
+    <p>ширина окна:</p>
+    <WithWindowWidth render={({width}) => (<span>{width}</span>)} />
+  </div>
+);
