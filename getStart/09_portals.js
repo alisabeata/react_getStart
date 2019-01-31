@@ -2,11 +2,25 @@
 
 // доступны в api react 16
 
-// модальные компоненты, которые рендерятся отдельно от родительского компонента (прим модальные окна, тултипы, расп перед закр body), с точки зрения реакта являются child, с точки зрения DOM явл отдельными элементами
+// модальные компоненты, которые рендерятся отдельно от родительского компонента
+// (прим модальные окна, тултипы, расп перед закр body), с точки зрения реакта 
+// являются child, с точки зрения DOM явл отдельными элементами
 
 // если нет элемента для вставки, то его можно сгенерировать в constructor
-
 class ModalWindow extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.portalDiv = document.createElement('div');
+    this.portalDiv.id = 'modals';
+    
+    document.body.appendChild(this.portalDiv);
+  }
+  
+  componentWillUnmount() {
+    document.body.removeChild(this.portalDiv);
+  }
+  
   render() { 
     const {children} = this.props;
     return ReactDOM.createPortal(children, document.getElementById('modals'));
@@ -91,4 +105,14 @@ class App extends Component {
       </div>
     );
   }
+}
+
+// or
+render() {
+  return (
+    <div>
+      <button onClick={this.handleClickShowModal}>toggle</button>
+      {isModalPresent && <ModalWindow />}
+    </div>
+  );
 }
