@@ -110,13 +110,13 @@ class WithWindowWidth extends Component {
 
   render() {
     const {width} = this.state;
-    return this.props.render({width});
+    return this.props.render(width);
   }
 }
 
 export default () => (
   <div>
     <p>ширина окна:</p>
-    <WithWindowWidth render={({width}) => (<span>{width}</span>)} />
+    <WithWindowWidth render={width => (<span>{width}</span>)} />
   </div>
 );
