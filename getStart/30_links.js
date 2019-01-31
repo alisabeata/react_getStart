@@ -26,3 +26,8 @@
 // - nextjs (server-side-rendering)
 // https://nextjs.org
 // https://github.com/zeit/next.js/
+
+
+
+// https://rollbar.com/
+// сервис сбора логов пользовательских ошибок

@@ -90,7 +90,7 @@ compose(fn, fn1, fn2)(x)
 
 
 
-// render props
+// - render props
 
 // передача метода рендер компонента
 

@@ -35,7 +35,7 @@ class App extends Component {
 }
 
 
-// defaultProps
+// - defaultProps
 // устанавливает значения по умолчанию
 // defaultProps работает без подключения сторонних пакетов
 class App extends Component {
@@ -51,3 +51,24 @@ class App extends Component {
     ...
   }
 }
+
+// - PropTypes.shape
+// для описания объектов
+static propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    age: PropTypes.number,
+  }).isRequired
+};
+
+
+// - PropTypes.oneOfType
+// один из описанных типов
+age: PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.string
+])
+
+// - PropTypes.any
+// любой тип
+PropTypes.any

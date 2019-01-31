@@ -39,6 +39,16 @@ render() {
   );
 }
 
+// - в JSX можно исп тэг <Fragment> для рендера дочерних нод, без оборачивания в родительский див (тк рендер должен возвращать одну ноду)
+import React, {Fragment, Component} from 'react';
+render() {
+  return (
+    <Fragment>
+      <span></span>
+      <p></p>
+    </Fragment>
+  );
+}
 
   
 // Можно исп Component или PureComponent, а так же обычные функции (в этом случае нет state)
