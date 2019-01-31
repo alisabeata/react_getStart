@@ -1,5 +1,58 @@
 // context
 
+// https://reactjs.org/docs/context.html
+
+
+// React.creatContext() в параметре ожидает дефолтное значение контекста
+//  возвращает объект с двумя параметрами Provider, Consumer
+// Provider отправляет значения
+// Consumer принимает значения
+const {Provider, Consumer} = React.createContext('light');
+// or
+const MyContext = React.createContext('light');
+// доступ MyContext.Provider / MyContext.Consumer
+
+class ContextApi extends Component {
+  state = {
+    theme: 'light'
+  };
+
+  componentDidMount() {
+    // раз в минуту меняет тему со светлой на тёмную
+    setInterval(() => this.setState(state => state.theme === 'light' ? {theme: 'dark'} : {theme: 'light'}), 1000);
+  }
+
+  render() {
+    return (
+      <Provider value="{this.state.theme}">
+        <IntermediateComponent>
+          <IntermediateComponent>
+            <IntermediateComponent>
+              <Button />
+            </IntermediateComponent>
+          </IntermediateComponent>
+        </IntermediateComponent>
+      </Provider>
+    );
+  }
+}
+
+const IntermediateComponent = ({children}) => <div>{children}</div>;
+
+// Consumer будет получать значение value провайдера через любую вложенность компонент
+const Button = () => (
+  <Consumer>
+    {value => (
+      <button style="{{backgroundColor: value === 'light' ? '#eee' : '#ccc'}}"></button> 
+    )}
+  </Consumer>
+);
+// имеет значение исп при большой вложенности
+
+
+
+// (old)
+
 // в большинстве случаев не рекомендован к использованию, тем не менее 
 // с помощью контекста работают библиотеки, связывающие react и redux, 
 // react-router, redux-form, все библиотеки которым необходимо 
@@ -43,7 +96,7 @@ class App extends Component {
 
 // с context
 
-// для работы с контекстом необходимо исп PropTypes
+// (!) для работы с контекстом необходимо исп PropTypes
 
 import PropTypes from 'prop-types';
 

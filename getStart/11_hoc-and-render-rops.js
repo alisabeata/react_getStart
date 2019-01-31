@@ -16,7 +16,7 @@ function pureHOC(wrappedComponent) {
       render() {
         return <wrappedComponent {...this.props} />;
       }
-    }
+    } 
   );
 }
 
