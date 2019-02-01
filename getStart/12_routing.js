@@ -1,16 +1,36 @@
 // react-routing
 
+
+// API react-router 
+// https://reacttraining.com/react-router/web/guides/quick-start
+// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom/docs/api
+
+// - BrowserRouter
+// - HashRouter
+// - MemoryRouter
+// - StaticRouter
+// - Router
 // - Link
+// - NavLink
+// - Prompt
+// - Redirect
 // - Route
 // - Switch
-// - Redirect
-// - вложенные роуты 
-// - API react-router 
+// - withRouter
 
 
 // start
 yarn add react-router-dom
 
+// (!) react-router-dom подходит для маленьких и средних приложений
+// для крупных обычно исп redux-router
+
+
+// - BrowserRouter
+// 1) импортировать BrowserRouter
+// 2) обернуть App <BrowserRouter> 
+
+// BrowserRouter создаёт контекст и передаёт компонентам history
 import {BrowserRouter} from 'react-router-dom';
 
 ReactDOM.render(
@@ -20,10 +40,15 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+// BrowserRouter пропс
+// basename
+// добавляет поддиректорию к корневому приложению (вложенне компоненты добавл к нему)
+<BrowserRouter basename="dashboard">
+
 
 // - Link
 // для создания ссылок используется внутренний компонент Link
-import {BrowserRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const App = () => (
   <nav>
@@ -36,7 +61,7 @@ const App = () => (
 
 // - Route
 // отвечает за рендер компонент относительно текущего path
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 const Home = () => <p>Home</p>;
 const About = () => <p>About</p>;
@@ -49,35 +74,41 @@ const App = () => (
       <Link to="/about">About</Link>
       <Link to="/hobbies">Hobbies</Link>
     </nav>
-    <Route path="/" exact={true} component={Home} />
+    <Route path="/" exact component={Home} />
     <Route path="/about" component={About} />
     <Route path="/hobbies" component={Hobbies} />
   </div>
 );
 
-// exact={true} ограничивает вхождение при сопоставлении (более строгое), те именно "/"
+// (!) указание :id у роута позволяет получать данные из пути
+<Route path="/home/:id">
+  
+// (!) /name* рендерит что угодно в директории 'name'
+<Route path="/about*">
 
+// (!) exact={true} ограничивает вхождение при сопоставлении (более строгое), те именно "/"
+<Route exact>
 
-// когда компонент рендерится через Route, он получает дополнительные props: 
-// history
-// location
-// match
+// (!) когда компонент рендерится через Route, он получает дополнительные props: history, location, match
 
 // для рендеринга стейтфул компонент исп аттр component
 <Route path="/about" component={About} />
-// для стейтлесс (функция с ретёрн) исп render
-<Route path="/about" render={(match, location, history) => {<About match={match} ... />}} />
-// такой подход исп для того чтобы избежать лишний рендеринг
+
+// для Route доступен render props
+<Route 
+  path="/topics" 
+  render={props => <Topics {...props} userName={userName} />} 
+/>
 
 // аттр chilren рендерит всегда, но исп например для анимаций, внутри сопоставляет совпадение match
 <Route path="/about" chilren={(match) => {<About match={match} ... />}} />
 
 
 // - Switch
-import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 
 <Switch>
-  <Route path="/" exact={true} component={Home} />
+  <Route path="/" component={Home} exact />
   <Route path="/about" component={About} />
   <Route path="/hobbies" component={Hobbies} />
 </Switch>
@@ -90,18 +121,19 @@ import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 const NotFound = () => <p>Not Found</p>;
 
 <Switch>
-  <Route path="/" exact={true} component={Home} />
+  <Route path="/" component={Home} exact />
   <Route path="/about" component={About} />
   <Route path="/hobbies" component={Hobbies} />
+  // рендер 404-страницы
   <Route path="*" component={NotFound} />
 </Switch>
   
   
 // - Redirect
-import {BrowserRouter, Link, Route, Switch, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 <Switch>
-  <Route path="/" exact={true} component={Home} />
+  <Route path="/" component={Home} exact />
   <Route path="/about" component={About} />
   <Route path="/hobbies" component={Hobbies} />
   <Redirect to="/" />
@@ -111,10 +143,17 @@ import {BrowserRouter, Link, Route, Switch, Redirect} from 'react-router-dom';
 // Redirect инициирует переход на указанный path через аттр to=""
 // так же можно исп Redirect с условием переадресации с определёного url (букваьно переадресация со старого урла на новый) from=""
 <Redirect from="/n" to="/news" />
-
+  
+// (!) редирект с любой директории на домашнюю
+<Redirect from="*" to="/" />
+  
+// (!) при указании путей можно исп RegExp
+// подробнее https://github.com/pillarjs/path-to-regexp
+<Redirect from="/about(\d+)" to="/about">
+<Redirect from="/about([1-9])" to="/about">
   
   
-// - вложенные роуты 
+// - nested routes (вложенные роуты) 
 const SportComponent = ({match}) => {
   const {id} = match.params;
   return <p>{id}</p>
@@ -139,26 +178,10 @@ const Hobbies = ({match}) => {
   );
 };
 
+// match пропс с данными от реакт роутер дом
 // для вложенных <Link /> исп match.url 
 // для вложенных <Route /> исп match.path 
 
 // один и тот же путь:
 // >> url: "hobbies/yoga"
 // >> path: "hobbies/:id"
-
-
-// API react-router 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom/docs/api
-
-// -- BrowserRouter
-// -- HashRouter
-// -- MemoryRouter
-// -- StaticRouter
-// -- Router
-// -- Link
-// -- NavLink
-// -- Prompt
-// -- Redirect
-// -- Route
-// -- Switch
-// -- withRouter

@@ -152,3 +152,16 @@ handleChange = event => {
     }
   }));
 };
+
+
+// - event.persist()
+// event.persist() нужен чтобы не стиралось значение event после асинхронного вызова
+handleClick = event => {
+  console.log(event); // без event.persist повторный вызова после setTimeout будет недоступен
+  event.persist();
+  setTimeout(() => console.log(event.target), 1);
+};
+
+// - event.nativeEvent
+// выводит нативный эвент вместо proxy
+event.nativeEvent
