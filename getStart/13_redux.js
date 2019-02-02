@@ -122,7 +122,7 @@ function addTodo(text) {
 // - reducer
   
 // обработка экшенов
-// рельюсеры разбиваются по полям в стейте, те для каждого поля/значения свой обработчик
+// редьюсеры разбиваются по полям в стейте, те для каждого поля/значения свой обработчик
 // reducer — это чистая функция(!), которая принимает предыдущее состояние и действие (state и action) и возвращает следующее состояние (новую версию предыдущего)
 // данные в редьюсере нельзя мутировать!
 // нельзя внутри вызывать не чистые функции, напр Date.now() или Math.random(), тк они генерируют разные значения при вызове, reducer только вычисляет новую версию состояния и возвращать её
@@ -137,67 +137,43 @@ const reducer = (state = {count: 0}, action) => {
       return state;
   }
 };
-
-const store = createStore(reducer);
-const action = {
-  type: 'ADD_COMMENT'
-};
-
-store.dispatch(action);
-console.log(store.getState()); // >> {count: 1}
   
-  
-// - split reducers
-// splitedReduser можно заменить combineReducers
-const splitedReduser = (state = initialState, action) => ({
-  balance: balance(state.balance, action),
-  transactions: transactions(state.transactions, action),
-  groups: groups(state.groups, action)
-});
-  
-function balance(state = 0, action) {
-  switch (action.type) {
-    case 'ADD_MONEY':
-      return state + action.payload;
-    case 'REMOVE_MONEY':
-      return state - action.payload;
-    case 'PLUS_PERCENTS':
-      return Math.floor(state * 1.1);
-    default state;
-}
       
-function transactions(state = [], action) {...}
-
-function groups(state = {}, action) {...}
-      
-const store = createStore(splitedReduser);
-  
 // - combineReducers
 // применяется combineReducers для организации редьюсеров
 import {combineReducers} from 'redux';
-      
-// аналог splitedReduser с combineReducers
-const splitedReduser = combineReducers({
-  balance,
-  transactions,
-  groups
-});
-...
-      
 
-// other example
-/*
-const comments = (state = {}, action) => state;
-const users = (state = {}, action) => state;
-
-export default combineReducers({
-  comments,
-  users
+const total = (state = [], action) => {
+  return state;
+};
+  
+const entities = (state = 0, action) => {
+  return state;
+};
+  
+const users = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_USER':
+      return [...state, action.payload];
+    case 'REMOVE_ALL_USERS':
+      return [];
+    default: 
+      return state;
+  }
+};
+  
+const rootReducer = combineReducers({
+  products: combineReducers({
+    total,
+    entities,
+  }),
+  users,
 });
-*/
+
+const store = createStore(rootReducer);
 
   
-// можно делать вложенние редьюсеров
+// можно делать вложение редьюсеров
 // изменение action.type обрабатывается на любом уровне вложенности
 const comments = (state = {count: 0, comments: []}, action) => {
   switch(action.type) {
@@ -324,6 +300,7 @@ const loadDataStart = () => ({
 // dispatch
 store.dispatch(loadDataStart());
   
+// пример без экшн криэйтора
 store.dispatch({
   type: TYPES.LOAD_DATA_END,
 });
