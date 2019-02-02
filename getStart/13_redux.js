@@ -1,11 +1,12 @@
 // Redux
 
 // надкомпонентное управление состоянием
+// компоненты: store, reducers, actions, action creators, react-redux, selectors, middlewares
 
 
 // - store
 // - API/методы
-// - action
+// - actions
 // - actions creators
 // - reducer
 
@@ -19,7 +20,7 @@ const initialState = {};
 const reducer = (state = initialState, action) => {
   if (action.type === 'SOME_ACTION') {
     const newVal = 1;
-    return {...state, newVal};// upd state
+    return {...state, newVal}; // upd state
   }
   return state;
 };
@@ -68,7 +69,7 @@ let unsubscribe = store.subscribe(() =>
 unsubscribe();
 
 
-// - action
+// - actions
 
 // единственный способ изменить состояние — передать action — объект, описывающий, что произошло
 // action должен быть плоским объектом, должен иметь поле type, значение которого определяется как строковая константа
@@ -94,6 +95,14 @@ unsubscribe();
 	date: '15/11/2017',
   }
 }
+  
+// (!) для экшенов имеет смысл выносить их названия в объект с переменными, 
+// чтобы не ошибиться в написании названия экшена
+const TYPES = {
+  LOAD_DATA_START: 'LOAD_DATA_START',
+  LOAD_DATA_END: 'LOAD_DATA_END',
+  SET_LAST_ACTIVITY_TIME: 'SET_LAST_ACTIVITY_TIME'
+};
 
   
 
@@ -101,6 +110,7 @@ unsubscribe();
 // - actions creators
   
 // В Redux генераторы действий (action creators) просто возвращают action (в виде объекта)
+// имеет смысл исп если есть payload
 function addTodo(text) {
   return {
     type: ADD_TODO,
@@ -260,4 +270,70 @@ store.dispatch(addComment('comment text from payload...'));
     });
 // in /actions/commentsTypes.js
     export const ADD_COMMENT = 'ADD_COMMENT';
+  
+  
+  
+  
+  
+  
+// полная структура редакс на примере (в одном файле)
+import {createStore} from 'redux';
+  
+const initialState = {
+  dataIsLoading: false,
+  users: [],
+  lastActivityTime: 0,
+};
+  
+// action types
+const TYPES = {
+  LOAD_DATA_START: 'LOAD_DATA_START',
+  LOAD_DATA_END: 'LOAD_DATA_END',
+  SET_LAST_ACTIVITY_TIME: 'SET_LAST_ACTIVITY_TIME'
+};
+  
+// reducer
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TYPES.LOAD_DATA_START:
+      return {...state, dataIsLoading: true};
+      
+    case TYPES.LOAD_DATA_END:
+      return {...state, dataIsLoading: false};
+      
+    case TYPES.SET_LAST_ACTIVITY_TIME:
+      return {...state, lastActivityTime: action.payload};
+      
+    default:
+      return state;
+  }
+};
+  
+// store
+const store = createStore(reducer);
+  
+store.subscribe(() => {
+  console.log(store.getState());
+});
+  
+// action creator
+const loadDataStart = () => ({
+  type: TYPES.LOAD_DATA_START,
+});
+  
+// dispatch
+store.dispatch(loadDataStart());
+  
+store.dispatch({
+  type: TYPES.LOAD_DATA_END,
+});
+  
+const now = new Date.getTime();
+  
+const setLastActivityTime = payload => ({
+  type: TYPES.SET_LAST_ACTIVITY_TIME,
+  payload,
+});
+  
+store.dispatch(setLastActivityTime(now));
   

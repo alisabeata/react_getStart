@@ -9,12 +9,12 @@ const Stateless = () => {
   return <p>stateless component</p>;
 };
 
-function pureHOC(wrappedComponent) {
+function pureHOC(WrappedComponent) {
   return (
     class pureHOC extends PureComponent {
       static displayName = 'PureHOC'; // нужно для отображения имени компоненты в реакт дев тулз
       render() {
-        return <wrappedComponent {...this.props} />;
+        return <WrappedComponent {...this.props} />;
       }
     } 
   );
@@ -29,7 +29,7 @@ import pureHOC
 
 
 // get width with HOC
-function withWindowWidthHOC(wrappedComponent) {
+function withWindowWidthHOC(WrappedComponent) {
   return class WithWindowWidthHOC extends PureComponent {
     state = {
       width: window.innerWidth
@@ -49,7 +49,7 @@ function withWindowWidthHOC(wrappedComponent) {
 
     render() {
       const {width} = this.state;
-      return <wrappedComponent {...this.props} width={width} />
+      return <WrappedComponent {...this.props} width={width} />
     }
   }
 }

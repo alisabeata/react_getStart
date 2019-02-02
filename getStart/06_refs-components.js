@@ -3,7 +3,7 @@
 // - от parent к child
 // -- props
 // -- children
-// -- ref
+// -- ref (React.createref())
 
 // - от child к parent
 // -- callback
@@ -112,8 +112,11 @@ class App extends Component {
   }
 }
 
-// ref для работы с DOM
+
+
+// - ref для работы с DOM
 // (например для video, audio)
+// https://learn-reactjs.ru/core/refs-and-the-dom
 
 // (old method)
 class App extends Component {
