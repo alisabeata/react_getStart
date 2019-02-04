@@ -11,6 +11,20 @@
 // - reducer
 
 
+
+// структура проекта:
+// - actionCreators
+// ---- index.js
+// - actionTypes
+// ---- index.js
+// - reducers
+// ---- index.js (import users, add in combineReducers, return combineReducers)
+// ---- users.js (import constants from actionTypes)
+// - store.js
+// - index.js (import Provide, import store, add <Provider store={store}>)
+
+
+
 // start
 yarn add redux
 
@@ -44,6 +58,9 @@ createStore(reducer, state);
 store.subscribe(() => {
   console.log(store.getState());
 });
+
+// (!) вторым агументом можно передавать сохранённое состояние (с сервера/локал сторадж)
+// в этом случае исп инишиал стейт в редьюсерах не обязателен
 
 
 // - API/методы
@@ -143,11 +160,11 @@ const reducer = (state = {count: 0}, action) => {
 // применяется combineReducers для организации редьюсеров
 import {combineReducers} from 'redux';
 
-const total = (state = [], action) => {
+const entities = (state = [], action) => {
   return state;
 };
   
-const entities = (state = 0, action) => {
+const total = (state = 0, action) => {
   return state;
 };
   
@@ -164,8 +181,8 @@ const users = (state = [], action) => {
   
 const rootReducer = combineReducers({
   products: combineReducers({
-    total,
     entities,
+    total,
   }),
   users,
 });

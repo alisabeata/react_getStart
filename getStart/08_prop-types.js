@@ -61,6 +61,14 @@ static propTypes = {
   }).isRequired
 };
 
+static propTypes = {
+  balance: PropTypes.shape({
+    BTC: PropTypes.number,
+    USD: PropTypes.number,
+    EUR: PropTypes.number,
+  }),
+};
+
 
 // - PropTypes.oneOfType
 // один из описанных типов

@@ -15,7 +15,8 @@ ReactDOM.render(
 );
 
 
-// - connect непосредственно передаёт доступ к состоянию, делая доступным метод dispatch для всех вложенных компонентов props.dispatch()
+// - connect непосредственно передаёт доступ к состоянию, делая доступным метод
+// dispatch для всех вложенных компонентов props.dispatch()
 // connect является hoc
 let AppWithRedux = connect()(App);
 
@@ -32,7 +33,8 @@ let AppWithRedux = connect(mapStateToProps, mapDispatchToProps)(App);
 
 // mapStateToProps берёт сосстояние стейта передаёт в пропс компонента
 // mapStateToProps должен быть функцией
-// state -- глобальный state редакса
+// state — глобальный state редакса
+// можно выбрать необходимые компоненту поля из глобального стейта
 const mapStateToProps = state => ({
   count: state.comments.count
 });
@@ -40,8 +42,16 @@ const mapStateToProps = state => ({
 // mapDispatchToProps представл собой объект, передаёт акшены, диспатч
 // те добавляет конкретную функц как метод props
 // из компонента функция вызывается как this.props.fnName()
+// передаёт экшен криэйторы необходимые компоненту
 const mapDispatchToProps = {
-  addComment
+  addUsers,
+  removeAllUsers,
+};
+
+// расширенный синтаксис (don't use)
+const mapDispatchToProps = {
+  addUsers: (id, name) => dispatch(addUser(id, name)),
+  removeAllUsers: () => dispatch(removeAllUsers()),
 };
 
 
