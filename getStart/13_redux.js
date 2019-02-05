@@ -24,6 +24,8 @@
 // - index.js (import Provide, import store, add <Provider store={store}>)
 
 
+// в редакс имеет смысл выносить данные необходимые всему приложению, либо данные хранящиеся на бекенде
+
 
 // start
 yarn add redux

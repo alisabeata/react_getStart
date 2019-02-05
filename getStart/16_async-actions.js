@@ -1,5 +1,6 @@
 // async-actions
 
+// async-actions доп логика в миддлварах, для отправки сетевых запросов
 
 const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
 const FETCH_EPISODS_SUCCESS = 'FETCH_EPISODS_SUCCESS';
