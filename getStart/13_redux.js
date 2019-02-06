@@ -62,6 +62,9 @@ store.subscribe(() => {
 });
 
 // (!) вторым агументом можно передавать сохранённое состояние (с сервера/локал сторадж)
+const prevState = localStorage.getItem('state');
+const state = createStore(prevState);
+
 // в этом случае исп инишиал стейт в редьюсерах не обязателен
 
 
