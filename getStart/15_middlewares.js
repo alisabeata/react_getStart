@@ -3,6 +3,8 @@
 // middlewares доп слой логики перед отправкой экшенов в стор
 // используют для логирования, обработки ошибок, общению с асинхронным API и пр.
 
+// (!) прежде чем писать функциональность работы с сетью и пр в мидлварах, рекомендуется проверить наличие готовых решений (их масса)
+
 // мидлвары нужно оборачивать applyMiddleware
 import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers';
@@ -31,9 +33,11 @@ const result = store.dispatch({type: 'SOME_TYPE'});
 console.log(result); // при наличии мидлвара возвр результат его выполнения
 
 
-// (!) store enhancers подключаются через compose(), напр DevTools, тк им нужна большая функциональность, чем предоставляет applyMiddleware
+// (!) store enhancers подключаются через compose(), напр DevTools, 
+// тк им нужна большая функциональность, чем предоставляет applyMiddleware
 import {createStore, applyMiddleware, compose} from 'redux';
 
+// compose вызывает каждый аргумент в контексте предыдущего
 
 // чтобы исп compose и middlewares
 export default () =>
@@ -46,4 +50,15 @@ export default () =>
       )
   );
 
-// compose вызывает каждый аргумент в контексте предыдущего
+
+// (пример) замер производительности редьюсеров
+export function execTime(store) {
+  return function (next) {
+    return function (action) {
+      console.time('redux exec');
+      const result = next(action);
+      console.timeEnd('redux exec');
+      return result;
+    }
+  }
+}

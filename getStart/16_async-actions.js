@@ -2,6 +2,174 @@
 
 // async-actions доп логика в миддлварах, для отправки сетевых запросов
 
+
+// GET_SOMETHING_REQUEST
+// isLoading: true
+
+// GET_SOMETHING_SUCCESS
+// isLoading: false
+// data: from fetch
+
+// GET_SOMETHING_FAILURE
+// isLoading: false
+// error: from fetch
+
+
+
+// actions.js
+export const GET_SERIES_REQUEST = 'GET_SERIES_REQUEST';
+export const GET_SERIES_SUCCESS = 'GET_SERIES_SUCCESS';
+export const GET_SERIES_FAILURE = 'GET_SERIES_FAILURE';
+
+export const getSeriesRequest = () => ({
+  type: GET_SERIES_REQUEST,
+});
+
+
+// App.js
+class App extends PureComponent {
+  componentDidMount() {
+    // запрос данных
+    this.props.getSeriesRequest();
+  }
+  
+  render() {
+    const {series, isLoading, error} = this.props;
+    
+    if (isLoading) return <p>Загрузка данных</p>;
+    if (error) return <p>Ошибка</p>;
+    
+    return (
+      <div>
+        {series.map(item => (
+          <div key={item.id}>
+            <img src={item.img} alt={item.name} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  isLoading: state.isLoading,
+  error: state.error,
+  series: state.series,
+});
+
+
+// reducer.js
+import {
+  GET_SERIES_REQUEST,
+  GET_SERIES_SUCCESS,
+  GET_SERIES_FAILURE
+} from './actions';
+
+
+// (!) флаги можно передавать в объекте export const LOADING_STATE = {idle: 'IDLE', loading: 'LOADING', success: 'SUCCESS', failure: 'FAILURE'}
+/*
+const initialState = {
+  series: [],
+  loadingState: LOADING_STATE.idle,
+  error: null,
+};
+...
+case GET_SERIES_REQUEST:
+  return {...state, isLoading: LOADING_STATE.loading};
+case GET_SERIES_SUCCESS:
+  return {
+    ...state,
+    series: action.payload,
+    loadingState: LOADING_STATE.success,
+  };
+case GET_SERIES_FAILURE:
+  return {
+    ...state,
+    error: action.payload,
+    loadingState: LOADING_STATE.failure,
+  };
+*/
+
+const initialState = {
+  series: [],
+  isLoading: false,
+  error: null,
+};
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SERIES_REQUEST:
+      return {...state, isLoading: true};
+      
+    case GET_SERIES_SUCCESS:
+      return {
+        ...state,
+        series: action.payload,
+        isLoading: false,
+      };
+      
+    case GET_SERIES_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false,
+      };
+      
+    default:
+      return state;
+  }
+};
+
+
+// store.js
+import {createStore, compose, applyMiddleware} from 'redux';
+import rootReducer from './reducers';
+import tvmazeFetchMiddleware from './middlewares'
+
+const createAppStore = () => {
+  const store = createStore(
+      rootReducer, 
+      compose(
+        applyMiddleware(tvmazeFetchMiddleware), 
+        window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+      )
+  );
+  
+  return store;
+};
+
+export default createAppStore;
+    
+
+// middlewares.js
+import {
+  GET_SERIES_REQUEST,
+  getSeriesSuccess,
+  getSeriesFailure
+} from '';
+
+export const tvmazeFetchMiddleware = store => next => action => {
+  if (action.type === GET_SERIES_REQUEST) {
+    fetch('http://api.tvmaze.com/shows/180/episodes', {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(series => {
+        store.dispatch(getSeriesSuccess(series, series.length));
+      })
+      .catch(error => {
+        store.dispatch(getSeriesFailure(error));
+      });
+  }
+  
+  // next(action) передаёт экшн следующему редьюсеру
+  return next(action);
+};
+
+
+
+// (old)
+
 const FETCH_EPISODS_REQUEST = 'FETCH_EPISODS_REQUEST';
 const FETCH_EPISODS_SUCCESS = 'FETCH_EPISODS_SUCCESS';
 const FETCH_EPISODS_FAILURE = 'FETCH_EPISODS_FAILURE';
