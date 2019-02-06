@@ -31,3 +31,7 @@
 
 // https://rollbar.com/
 // сервис сбора логов пользовательских ошибок
+
+
+// redux-localstorage
+// https://github.com/elgerlambert/redux-localstorage

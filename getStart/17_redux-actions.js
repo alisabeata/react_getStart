@@ -3,12 +3,12 @@
 yarn add redux-actions
 
 
+// позволяет все типы экшенов держать в экшен криэйторах
 
 // - createAction
-
 import {createAction} from 'redux-actions';
 
-// при использовании redux-actions не нужно исп отдельный файл для типов
+// (!) при использовании redux-actions не нужно исп отдельный файл для типов
 // createAction создаёт action creator
  
 export const fetchEpisodesRequest = createAction('FETCH_EPISODES_REQUEST');
@@ -128,9 +128,9 @@ const episodes = (state = [], action) => {
 import {handleActions} from 'redux-actions';
 
 const isFetching = handleActions({
-  [fetchEpisodesRequest]: () => true,
-  [fetchEpisodesSuccess]: () => false,
-  [fetchEpisodesFailure]: () => false
+  [fetchEpisodesRequest.toString()]: () => true,
+  [fetchEpisodesSuccess.toString()]: () => false,
+  [fetchEpisodesFailure.toString()]: () => false
 }, false); 
 // false -- в данном случае дефолтный стейт
 

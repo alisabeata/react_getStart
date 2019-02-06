@@ -4,6 +4,8 @@
 // используют для логирования, обработки ошибок, общению с асинхронным API и пр.
 
 // (!) прежде чем писать функциональность работы с сетью и пр в мидлварах, рекомендуется проверить наличие готовых решений (их масса)
+// redux-localstorage
+// https://github.com/elgerlambert/redux-localstorage
 
 // мидлвары нужно оборачивать applyMiddleware
 import {createStore, applyMiddleware} from 'redux';
