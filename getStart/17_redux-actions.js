@@ -2,6 +2,8 @@
 
 yarn add redux-actions
 
+// https://redux-actions.js.org/introduction/tutorial
+
 // объединяет actionTypes и actionCreators
 // позволяет типы экшенов держать в экшен криэйторах
 

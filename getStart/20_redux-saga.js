@@ -1,10 +1,10 @@
-// Redux-saga
+// redux-saga
 
 // https://redux-saga.js.org/
 
 yarn add redux-saga
 
-import createSagaMiddleware from 'redux-saga'; 
+import createSagaMiddleware from 'redux-saga';
 
 // cаги подключаются как middleware, и работают в своем слое
 // имеют доступ к стейту, могут реагировать/диспатчить экшены
@@ -12,6 +12,29 @@ import createSagaMiddleware from 'redux-saga';
 // те убирает побочные эффекты и нечистые функции из приложения на уровень отдельного слоя
 // взаимодействует только с экшенз
 // саги описываются с помощью генераторов
+// редакс-сага берёт на себя управление побочными эффектами
+
+// если представлять организацию взаимодействия редакса-реакта как MVC,
+// то M — это redux, V — react, C — redux-saga
+// M — доступ к данным, управление данными
+// V — предоставление данных, внешний вид
+// C — работа с сетью, работа с ассинхронными операциями, локалсторадж
+
+
+
+function* episodeWatcher() {
+  yield takeEvery(getSeriesRequest, seriesFlow);
+}
+
+function* seriesFlow() {
+  try {
+    const response = yield call(api.getSeries);
+    yield put(getSerieSuccess(response));
+  } catch (error) {
+    yield put(getSerieFailure(error));
+  }
+}
+
 
 
 // in store.js
@@ -153,10 +176,7 @@ import {takeLatest} from 'redux-saga/effects';
 // при повторных экшенах/запусках отменяет выполнение
 // до конца исп только тот генератор, который был вызван последним
 
-
-
-
-// takeEvery и takeLatest явл высокоуровневыми функциями, которые работают поверх медотов
+// (!) takeEvery и takeLatest явл высокоуровневыми функциями, которые работают поверх медотов
 
 // пример реализации takeEvery
 // для этого исп методы take, fork
@@ -210,4 +230,36 @@ export default function* pageLoaderFlow() {
     
     yield put({type: 'LOADER/STOR_PAGE_LOADER'});
   }
+}
+
+// - cancel / cancelled
+// отмена задач
+// https://ru.redux-saga.js.org/soderzhanie/advanced/taskcancellation
+
+
+
+// - этапы переноса сетевых запросов из компонента в саги
+// 1. вынести все запросы в api.js
+// 2. см пример in store.js выше
+// 3. структура в дериктории sagas
+// - in index.js
+import {fork} from 'redux-saga/effects';
+import {imageRequestWatcher} from './somerequest';
+
+export default function* () {
+  yield fork(imageRequestWatcher);
+}
+// - somerequest.js
+import {takeEvery, call} from 'redux-saga/effects';
+import {getImgageRequest} from './actions';
+
+function imageRequestFlow() {
+  const response = yield
+}
+
+export default function* imageRequestWatcher() {
+  yield takeEvery(getImgageRequest.toString(), (action) => {
+    console.log(action);
+    console.log('imageRequestWatcher is running');
+  });
 }
