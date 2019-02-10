@@ -33,16 +33,20 @@ __test__/
 
 example.js
 
+// тесты можно располагать рядом с тестируемым файлом (наиболее частый подход)
+example.js
+example.test.js
+
 
 // in example.test.js
-    import {sum} from '../example';
+import {sum} from '../example';
 
-    it('sum is work', () => {
-      expect(sum(1, 2)).toEqual(3);
-    });
+it('sum is work', () => {
+  expect(sum(1, 2)).toEqual(3);
+});
 
 // in example.js
-    export const sum = (a, b) => a + b;
+export const sum = (a, b) => a + b;
 
 
 
@@ -84,14 +88,14 @@ example.js
 
 
 // in example.test.js
-    it('immutablePush return new array' , () => {
-      const ar = [1, 2, 3];
+it('immutablePush return new array' , () => {
+  const ar = [1, 2, 3];
 
-      expect(immutablePush(ar, 4)).toEqual([1, 2, 3, 4]);
-    });
+  expect(immutablePush(ar, 4)).toEqual([1, 2, 3, 4]);
+});
 
 // in example.js
-    export const immutablePush = (arr, item) => [...arr, item];
+export const immutablePush = (arr, item) => [...arr, item];
 
 
 
@@ -124,45 +128,45 @@ describe('example.js', () => {
 // - test Promises
 
 // in example.test.js
-    it('promiseTimeout return promise after timeout' , () => {
-      expect(
-        promiseTimeout(() => {
-          return 'test';
-        }, 1000)
-      ).toBeInstanceOf(Promise);
-    });
+it('promiseTimeout return promise after timeout' , () => {
+  expect(
+    promiseTimeout(() => {
+      return 'test';
+    }, 1000)
+  ).toBeInstanceOf(Promise);
+});
 
 // in example.js
-    export const promiseTimeout = (fn, timeout) => 
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve(fn());
-        }, timeout);
-      });
+export const promiseTimeout = (fn, timeout) => 
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve(fn());
+    }, timeout);
+  });
 
 
 // тест resolve
 // in example.test.js
-    it('promiseTimeout return correct value' , done => {
-      expect(
-        promiseTimeout(() => {
-          return 'test string';
-        }, 1000)
-      ).resolve.toEqual('test string');
-    });
+it('promiseTimeout return correct value' , done => {
+  expect(
+    promiseTimeout(() => {
+      return 'test string';
+    }, 1000)
+  ).resolve.toEqual('test string');
+});
 
 
 
 // - done в качестве аргумента
 
 // in example.test.js
-    it('promiseTimeout return promise after timeout' , done => {
-      expect(
-        promiseTimeout(() => {
-          done();
-        }, 1000)
-      ).toBeInstanceOf(Promise);
-    });
+it('promiseTimeout return promise after timeout' , done => {
+  expect(
+    promiseTimeout(() => {
+      done();
+    }, 1000)
+  ).toBeInstanceOf(Promise);
+});
 
 
 

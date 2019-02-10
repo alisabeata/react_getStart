@@ -9,6 +9,8 @@ yarn add redux-actions
 
 // - createAction
 import {createAction} from 'redux-actions';
+// or
+import {createActions} from 'redux-actions';
 
 
 // простой createActions (только с типами)
