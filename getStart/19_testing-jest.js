@@ -1,9 +1,9 @@
 // testing (jest)
 
 
-// тестируется только самописный код
 // https://jestjs.io
 
+// https://facebook.github.io/create-react-app/docs/running-tests
 
 yarn test             // init
 yarn test --coverage  // показывает покрытие файлов тестами
@@ -19,6 +19,8 @@ yarn test --coverage  // показывает покрытие файлов те
 // TDD - сначала тесты, потом код
 
 // Snapshot testing - сначала вывод значения, затем тест (результат первого выполнения кэшируется)
+
+// (!) тестируется только самописный код
 
 
 // yarn test и yarn start можно запускать параллельно
@@ -60,7 +62,7 @@ export const sum = (a, b) => a + b;
 
 // проверка на равенство
 // .toBe()                   — проверка на равенство (проверяет на строгое соответствие ===)
-// .toEqual()                — проверка на равенство (проверет по значениям полей)
+// .toEqual()                — проверка на равенство (проверет по значениям полей, можно делать сравнение объектов)
 // .not.toBe()               — отрицание
 // .toBeInstanceOf(Class)    - является ли экземпляром определённого класса (прим. Promise)
 
@@ -103,6 +105,7 @@ export const immutablePush = (arr, item) => [...arr, item];
 // объединение тестов в блоки
 // describe.skip('name', () => {}) пропустить блок
 // describe.only('name', () => {}) выполнять только этот блок
+// (!) нет ограничений на вложение describe друг в друга
 describe('example.js', () => {
   it('sum is work', () => {
     expect(sum(1, 2)).toEqual(3);
@@ -229,4 +232,18 @@ describe('redures descr', () => {
     
     expect(next.orders).toEqual([]);
   });
+});
+
+
+
+// - Mock Functions / создание функций в jest
+// могут исп когда нет доступа к функции
+// https://doc.ebichu.cc/jest/docs/ru/mock-function-api.html
+import {total} from './App';
+
+const add = jest.fn(() => 3);
+
+test('add', () => {
+  expect(add(1, 2)).toBe(3);
+  expect(add(5, 2)).toBe(7);
 });

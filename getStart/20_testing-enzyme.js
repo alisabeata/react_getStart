@@ -12,7 +12,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({adapter: new Adapter()});
 
 // если не исп react create app
-yarn add -D enzyme enzyme-adapter-react-16
+yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 
 
 // методы enzyme: shallow, mount, render
