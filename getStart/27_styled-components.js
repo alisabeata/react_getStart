@@ -67,3 +67,40 @@ const Header = styled.div`
 import logoImg from './logo';
 
 <img src={logoImg} />
+
+
+// - наследование компонент
+const Button = styled.button`
+  background: #ccc;
+`;
+
+const WarningButton = Button.extend`
+  border: 1px solid red;
+`;
+
+
+// - получение пропс
+const Container = styled.div`
+  font-size: ${p => p.counter + 12}px;
+`;
+
+
+// - ThemeProvider
+// добавление общих переменных ччерез контекст
+import {ThemeProvider} from 'styled-components';
+
+const theme = {
+  mainColor: '#ff0000'
+};
+
+ReactDOM.render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
+  document.getElementById('root'),
+);
+
+// other component
+const Button = styled.button`
+  background: ${p => p.theme.mainColor};
+`;
