@@ -39,6 +39,10 @@ const rotate360 = keyframes`
   }
 `;
 
+const styles = css`
+  animation: ${rotate} 2s linear infinite;
+`
+// or
 const ImgLogo = styled.img`
   animation: ${rotate360} 1s linear infinite;
 `;
@@ -73,15 +77,26 @@ import logoImg from './logo';
 const Button = styled.button`
   background: #ccc;
 `;
-
 const WarningButton = Button.extend`
   border: 1px solid red;
 `;
+// or
+const Button = styled.button`
+  border: 2px solid palevioletred;
+`;
+const TomatoButton = styled(Button)`
+  border-color: tomato;
+`;
+
+// (!) .extend и .withComponent будут деприкейтед в след версиях
 
 
 // - получение пропс
 const Container = styled.div`
-  font-size: ${p => p.counter + 12}px;
+  font-size: ${props => props.counter + 12}px;
+`;
+const Input = styled.input`
+  color: ${props => props.inputColor || "palevioletred"};
 `;
 
 
@@ -102,5 +117,5 @@ ReactDOM.render(
 
 // other component
 const Button = styled.button`
-  background: ${p => p.theme.mainColor};
+  background: ${props => props.theme.mainColor};
 `;

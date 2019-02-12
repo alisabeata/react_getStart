@@ -6,7 +6,7 @@ yarn add react-app-rewired
 
 
 // кастомизация поведения модулей в create-react-app 
-
+// позволяет менять конфиг вебпака без eject react-app
 
 // 1. для начала нужно создать конфиг config-overrides.js (отключить create-react-app)
 

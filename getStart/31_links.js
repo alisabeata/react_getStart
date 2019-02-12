@@ -28,6 +28,10 @@
 // https://github.com/zeit/next.js/
 
 
+// - react-app-rewired
+// пзволяет менять конфиг вебпака без eject react-app
+// https://github.com/timarney/react-app-rewired
+
 
 // https://rollbar.com/
 // сервис сбора логов пользовательских ошибок
