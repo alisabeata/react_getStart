@@ -5,6 +5,7 @@ yarn add recompose
 
 
 // https://github.com/acdlite/recompose
+// API: https://github.com/acdlite/recompose/blob/master/docs/API.md
 
 compose(fn, fn1, fn2)(x)
 
@@ -72,7 +73,7 @@ const enchance = compose(
 );
   
   
-// можно исп с додкл модулями
+// можно исп с подкл модулями
 const enchance = compose(
   connect(state => ({}), {}),
   withRouter,
@@ -109,3 +110,11 @@ import {withReducer} from 'recompose';
 const enchance = compose(
   withReducer('name', 'changeName', (state, action) => state, initialState)
 );
+
+
+// - pure
+import {pure} from 'recompose';
+
+let StatelessComponent = () => <p>StatelessComponent</p>;
+
+StatelessComponent = pure(StatelessComponent); // >> рендерится только от изменения пропс
