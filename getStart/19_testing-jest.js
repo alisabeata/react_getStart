@@ -8,6 +8,8 @@
 yarn test             // init
 yarn test --coverage  // показывает покрытие файлов тестами
 
+open coverage/lcov-report/index.html // открыть визуализацию покрытия тестами
+
 
 // https://wallabyjs.com/ подсветка функций которые покрыты/нет тестами
 // https://quokkajs.com/ беспл версия
@@ -30,7 +32,7 @@ yarn test --coverage  // показывает покрытие файлов те
 
 
 // - именование
-__test__/
+__tests__/
   example.test.js
 
 example.js
