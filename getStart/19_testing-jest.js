@@ -7,7 +7,7 @@
 
 yarn test             // init
 yarn test --coverage  // показывает покрытие файлов тестами
-
+yarn test --watch     // вотчер
 open coverage/lcov-report/index.html // открыть визуализацию покрытия тестами
 
 
@@ -67,6 +67,7 @@ export const sum = (a, b) => a + b;
 // .toEqual()                — проверка на равенство (проверет по значениям полей, можно делать сравнение объектов)
 // .not.toBe()               — отрицание
 // .toBeInstanceOf(Class)    - является ли экземпляром определённого класса (прим. Promise)
+// .toMatchObject({})        - проверка на объекта на равенство
 
 // проверка на true
 // .toBeNull()               — проверка на null
@@ -89,6 +90,8 @@ export const sum = (a, b) => a + b;
 // .toContain()              — проверка на наличие элемента
 
 
+// test.skip('...', () => )  — пропустить тест
+// test.only('...', () => )  — выполнить только этот тест
 
 
 // in example.test.js
