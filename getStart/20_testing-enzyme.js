@@ -18,7 +18,6 @@ yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 // методы enzyme: shallow, mount, render
 import {shallow, mount, render} from 'enzyme';
 
-
 // - shallow — монтирует компоненту на верхнем уровне, без монтирования вложенных
 const wrapper = shallow(<App />);
                         
@@ -81,3 +80,13 @@ describe('App component', () => {
     console.log(wrapper.find('.App-header').data('id')) // <<< доступен метод .data('id')
   });
 });
+
+
+// events
+// https://airbnb.io/enzyme/docs/api/mount.html#reactwrapper-api
+
+// .find(selector)                    — находит соответвие внутри компонента
+// .contains(nodeOrNodes) => Boolean  — проверка на то содержит ли компон элемент
+// .hasClass(className) => Boolean    — на наличие класса
+// .setProps({ isDisabled: true })    - добавляет пропсы
+.setProps({ isDisabled: true } as any)
