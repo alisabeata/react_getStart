@@ -83,6 +83,7 @@ const mytuple: MyTuple = [123, 'abc', 'foo']; // << ошибка
 
 // - enum
 // enum способ перечисления, указывает на индекс элемента в списке или вычисляемое значение
+// необходим для большей наглядности (самодокументируемости кода)
 enum SomeEnum {
     // constant members
     None, 
@@ -100,6 +101,33 @@ console.log(SomeEnum.Three); // 4
 console.log(SomeEnum.Four); // 8
 console.log(SomeEnum.Five); // 12
 console.log(SomeEnum.Six); // 3
+
+// пример
+// явное указание сущностей вместо исп числовых индексов элементов
+enum Fruit {
+  Apple,  // == 0
+  Orange, // == 1
+  Banana  // == 2
+}
+
+function drawImg(fruit: Fruit) {
+  const domElement: HTMLImageElement = document.createElement('img');
+  
+  switch (fruit) {
+    case Fruit.Apple:
+      domElement.src = 'img/apple.jpg';
+      break;
+    case Fruit.Orange:
+      domElement.src = 'img/apple.jpg';
+      break;
+    case Fruit.Banana:
+      domElement.src = 'img/apple.jpg';
+      break;
+  }
+  document.body.appendChild(domElement);
+}
+
+drawImg(Fruit.Banana);
 
 
 // - interface
