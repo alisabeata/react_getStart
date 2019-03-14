@@ -160,3 +160,15 @@ function sum(a: number | string, b: number | string) {}
 // - условия для наличия аргументов/параметров
 // прим, count? вопрос в конце значит, что аргумента может и не быть
 function printCount(str: string, count?: string) {}
+
+// (!) опциональные параметры с ? указываются в конце перечисляемых аргументов
+
+// (!) rest параметры обозначаются типом массива
+function (...names: string[])
+
+
+// - type assertion (утверждение типов)
+const someData: any = 'Some string'; // вместо 'Some string' может быть результат выполнения сторонней библиотеки
+const strLn1: number = (<string>someData).length; // утверждение что значение someData явл типом string
+// or
+const strLn2: number = (someData as string).length;
