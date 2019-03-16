@@ -101,7 +101,7 @@ const Input = styled.input`
 
 
 // - ThemeProvider
-// добавление общих переменных ччерез контекст
+// добавление общих переменных через контекст
 import {ThemeProvider} from 'styled-components';
 
 const theme = {
