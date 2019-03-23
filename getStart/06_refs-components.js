@@ -134,7 +134,7 @@ class App extends Component {
 
 // (new) with React.createref()
 class App extends Component {
-  div = React.createref();
+  div = React.createRef();
 
   componentDidMount() {
     console.log(this.div) // >> <div></div>
