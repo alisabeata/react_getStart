@@ -40,3 +40,13 @@
 // - rollbar
 // https://docs.rollbar.com/docs/javascript
 // для фиксации лога ошибок
+
+
+// - Ramda
+// https://ramdajs.com/docs/
+// аналог lodash/underscore для реакт
+
+
+// - source-map-explorer
+// https://www.npmjs.com/package/source-map-explorer
+// оценка производительности
