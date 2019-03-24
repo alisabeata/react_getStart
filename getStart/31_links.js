@@ -50,3 +50,6 @@
 // - source-map-explorer
 // https://www.npmjs.com/package/source-map-explorer
 // оценка производительности
+
+// https://github.com/ai/size-limit
+// аналог source-map-explorer
