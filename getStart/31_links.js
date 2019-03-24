@@ -36,3 +36,7 @@
 // - react-media
 // для рендеринга копнент, относительно разрешения экранаƒ
 // https://github.com/ReactTraining/react-media
+
+// - rollbar
+// https://docs.rollbar.com/docs/javascript
+// для фиксации лога ошибок
