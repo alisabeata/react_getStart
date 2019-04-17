@@ -44,10 +44,10 @@ constructor(props) {
   };
 }
 
-// - (new) static getDerivedStateFromProps()
+// - (new) static getDerivedStateFromProps(nextProps, prevState)
 // нужен для пердварительных вычислений от пропсов, с последующей передачей значения в стейт
 // static говорит о том, что this.state/this.setState не доступны из метода
-static getDerivedStateFromProps()
+static getDerivedStateFromProps(nextProps, prevState)
 
 // - (old) componentWillMount() 
 //* мало используется, функционал заменяется другими методами

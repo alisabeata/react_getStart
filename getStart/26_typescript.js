@@ -172,3 +172,37 @@ const someData: any = 'Some string'; // вместо 'Some string' может б
 const strLn1: number = (<string>someData).length; // утверждение что значение someData явл типом string
 // or
 const strLn2: number = (someData as string).length;
+
+
+
+// html types
+
+// dom элементы
+document.getElementById('root') as HTMLElement
+
+// jsx элементы
+JSX.Element[] | JSX.Element
+
+
+
+// - обобщения / Generics
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let numberOutput = identity<Number>(1);
+let wrongOutput = identity<Number>('str'); // ошибка компиляции, неверный тип данных аргумента
+let stringOutput = identity<String>('some string');
+
+
+// - модификаторы доступа / access modifier keyword
+
+// - public      - по умолчанию, исп не обязательно
+// - private     - доступен только внутри класса
+// - protected   - доступен только внутри класса и дочерним классам
+
+class Foo {
+  private x: number;
+  protected y: number;
+  public z: number;
+}
