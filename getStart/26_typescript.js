@@ -175,41 +175,33 @@ const strLn2: number = (someData as string).length;
 
 
 
-// html types
-
+// - html types
 // dom элементы
 document.getElementById('root') as HTMLElement
-
 // jsx элементы
 JSX.Element[] | JSX.Element
-
 
 
 // - обобщения / Generics
 function identity<T>(arg: T): T {
     return arg;
 }
-
 let numberOutput = identity<Number>(1);
 let wrongOutput = identity<Number>('str'); // ошибка компиляции, неверный тип данных аргумента
 let stringOutput = identity<String>('some string');
 
 
 // - модификаторы доступа / access modifier keyword
-
 // https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680
-
 // - public      - по умолчанию, исп не обязательно
 // - private     - доступен только внутри класса
 // - protected   - доступен только внутри класса и дочерним классам
-
-// (!) лучше не исп public метод
-
 class Foo {
   private x: number;
   protected y: number;
   public z: number;
 }
+// (!) лучше не исп public метод
 
 
 // - conditional types
@@ -226,7 +218,6 @@ type T1 = TypeName<"a">;  // "string"
 type T2 = TypeName<true>;  // "boolean"
 type T3 = TypeName<() => void>;  // "function"
 type T4 = TypeName<string[]>;  // "object"
-
 
 
 // with React
@@ -249,7 +240,6 @@ const App: React.SFC = () => {
   return </>
 };
 
-
 // statefull
 interface ISomeComponentProps {
   name: string;
@@ -260,23 +250,18 @@ interface ISomeComponentState {
 class SomeComponent extends React.Component<ISomeComponentProps, ISomeComponentState> {
   state: ISomeComponentState = {
     ...
-  }
-    
+  } 
   componentDidMount() {
     this.setState({ time: new Date() });
   }
-
   render () {...}
 }
-
   
 // if no props
 class App extends React.Component<{}, {}> {
   render () {}
 }
 
-  
-  
 // default props
 export default class Count extends React.Component<Props> {
   static defaultProps: Props = {
@@ -286,4 +271,14 @@ export default class Count extends React.Component<Props> {
   render () {
     return <h1>{this.props.count}</h1>;
   }
+}
+
+
+// - async / promises
+function task<T>(genFn: () => IterableIterator<any>): Promise<T> {
+  const p = new Promise<T>(resolve => {
+    const iterator = genFn();
+  });
+
+  return p;
 }
