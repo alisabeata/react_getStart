@@ -197,12 +197,93 @@ let stringOutput = identity<String>('some string');
 
 // - модификаторы доступа / access modifier keyword
 
+// https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680
+
 // - public      - по умолчанию, исп не обязательно
 // - private     - доступен только внутри класса
 // - protected   - доступен только внутри класса и дочерним классам
+
+// (!) лучше не исп public метод
 
 class Foo {
   private x: number;
   protected y: number;
   public z: number;
+}
+
+
+// - conditional types
+type TypeName<T> =
+  T extends string ? "string" :
+  T extends number ? "number" :
+  T extends boolean ? "boolean" :
+  T extends undefined ? "undefined" :
+  T extends Function ? "function" :
+  "object";
+
+type T0 = TypeName<string>;  // "string"
+type T1 = TypeName<"a">;  // "string"
+type T2 = TypeName<true>;  // "boolean"
+type T3 = TypeName<() => void>;  // "function"
+type T4 = TypeName<string[]>;  // "object"
+
+
+
+// with React
+import * as React from 'react';
+
+interface ISomeComponentProps {
+  name: string;
+}
+
+// stateless
+const SomeComponent: React.SFC<ISomeComponentProps> = (props) => {
+  return <div>{props.name}</div>;
+};
+// or
+const SomeComponent: React.FunctionComponent<ISomeComponentProps> = (props) => {
+  return <div>{props.name}</div>;
+};
+// or if no props
+const App: React.SFC = () => {
+  return </>
+};
+
+
+// statefull
+interface ISomeComponentProps {
+  name: string;
+}
+interface ISomeComponentState {
+  time: Date;
+}
+class SomeComponent extends React.Component<ISomeComponentProps, ISomeComponentState> {
+  state: ISomeComponentState = {
+    ...
+  }
+    
+  componentDidMount() {
+    this.setState({ time: new Date() });
+  }
+
+  render () {...}
+}
+
+  
+// if no props
+class App extends React.Component<{}, {}> {
+  render () {}
+}
+
+  
+  
+// default props
+export default class Count extends React.Component<Props> {
+  static defaultProps: Props = {
+    count: 10
+  };
+
+  render () {
+    return <h1>{this.props.count}</h1>;
+  }
 }
