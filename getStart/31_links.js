@@ -47,9 +47,14 @@
 // аналог lodash/underscore для реакт
 
 
+
+// - утилиты для оценки производительности
+
 // - source-map-explorer
 // https://www.npmjs.com/package/source-map-explorer
-// оценка производительности
 
+// - source-map-explorer
 // https://github.com/ai/size-limit
-// аналог source-map-explorer
+
+// - webpack-bundle-analyzer
+// https://www.npmjs.com/package/webpack-bundle-analyzer
