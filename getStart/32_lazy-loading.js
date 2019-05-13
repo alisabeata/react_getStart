@@ -36,3 +36,13 @@ export default class App extends React.Component {
     return <LoadableComponent />;
   }
 }
+
+
+// подгрузку модулей можно использовать по событию componentDidMount (prefetching)
+class SomeComponent extends React.Component {
+	componentDidMount() {
+		import('./Editor').then(editor => {
+			...
+		});
+	}
+}
