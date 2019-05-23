@@ -185,3 +185,9 @@ const Hobbies = ({match}) => {
 // один и тот же путь:
 // >> url: "hobbies/yoga"
 // >> path: "hobbies/:id"
+
+
+
+// - connected-react-router
+// https://github.com/supasate/connected-react-router
+// (!) react-router-redux was depricated
