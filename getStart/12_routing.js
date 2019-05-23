@@ -191,3 +191,6 @@ const Hobbies = ({match}) => {
 // - connected-react-router
 // https://github.com/supasate/connected-react-router
 // (!) react-router-redux was depricated
+
+// https://github.com/ReactTraining/history
+
