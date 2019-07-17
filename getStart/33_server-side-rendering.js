@@ -13,8 +13,11 @@
 
 
 // структура
-
 // GET('/') > Express Server > <Home/>HTML
+
+// решение
+// JSX on server side - запуск вебпака на сервере
+// renderToString()
 
 // renderToString() метод ReactDOM который рендерит компонент как HTML (render() исп компонент)
 
@@ -130,6 +133,6 @@ module.exports = {
 }
 
 
-// в теменале
+// в теминале
 npm run dev:build-server
 node build/bundle.js
