@@ -1,6 +1,7 @@
 // typeScript
 
-yarn create react-app my-app --scripts-version=react-scripts-ts
+yarn create react-app my-app --scripts-version=react-scripts-ts (depricated)
+yarn create react-app my-app  --typescript
 cd my-app
 yarn start
 

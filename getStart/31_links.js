@@ -33,8 +33,8 @@
 // - redux-localstorage
 // https://github.com/elgerlambert/redux-localstorage
 
-// - react-media
-// для рендеринга копнент, относительно разрешения экранаƒ
+// - react-media (media-query)
+// для рендеринга копнент, относительно разрешения экрана
 // https://github.com/ReactTraining/react-media
 
 // - rollbar
