@@ -1,5 +1,7 @@
 // server side rendering SSR
 
+// генерация html на севере
+
 // demo: https://github.com/StephenGrider/ReactSSRCasts
 
 // сервер сайд рендеринг ускоряет отображение контента для пользователя (3 шага рендеринга >> 1 шаг)
@@ -86,6 +88,9 @@ module.exports = {
 
 
 // package.json
+
+// (!) nodemon нужен для релоада ноды
+
 {
   "name": "react-ssr",
   "version": "1.0.0",
@@ -136,3 +141,8 @@ module.exports = {
 // в теминале
 npm run dev:build-server
 node build/bundle.js
+
+
+
+
+// 
