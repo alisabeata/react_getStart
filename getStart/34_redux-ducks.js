@@ -23,12 +23,42 @@ export default function reducer(state, action) {
   }
 }
 
-// action creator (with thunk)
+// action creator (with redux-thunk)
 export function signUp(email, password) {
   return dispatch => {
-    console.log('----', 'sign up');
+    dispatch({
+      type: SIGN_UP_REQUEST
+    });
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user =>
+        dispatch({
+          type: SIGN_UP_SUCCESS,
+          payload: { user }
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: SIGN_UP_ERROR,
+          error
+        })
+      );
   };
 }
+
+
+// in ../routes/authPage
+class AuthPageComponent extends Component {
+  handleSignUp = ({ email, password }) => this.props.signUp(email, password);
+  ...
+}
+
+export const AuthPage = connect(
+  null,
+  { signUp }
+)(AuthPageComponent);
 
 
 // in ../reducer.js

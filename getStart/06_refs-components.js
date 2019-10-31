@@ -153,6 +153,30 @@ class App extends Component {
 // onClick (другие события), event bubbling
 // см. 05_jsx-event-lists.js
 
+class Parent extends Component {
+  state = {
+    isChecked: false,
+  }
+  
+  handleCheckbox = (event) => {
+    const isChecked = !!event.target.checked
+
+    this.setState(state => ({
+      ...state,
+      isChecked,
+    }))
+  }
+  render () {
+    return <Children handleCheckbox={this.handleCheckbox} />
+  }
+}
+                  
+class Children extends Component {
+  render () {
+    return <input onChange={handleCheckbox} />
+  }
+}
+
 
 // между siblings
 // взаимодействие идёт через parent
