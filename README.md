@@ -1,1 +1,1 @@
-the getStart folder contain a manual
+getStart folder contains a manual
