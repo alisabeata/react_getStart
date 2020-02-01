@@ -39,7 +39,7 @@ render() {
   );
 }
 
-// - в JSX можно исп тэг <Fragment> для рендера дочерних нод, без оборачивания в родительский див (тк рендер должен возвращать одну ноду)
+// - (old) в JSX можно исп тэг <Fragment> для рендера дочерних нод, без оборачивания в родительский див (тк рендер должен возвращать одну ноду)
 import React, {Fragment, Component} from 'react';
 render() {
   return (
@@ -47,6 +47,17 @@ render() {
       <span></span>
       <p></p>
     </Fragment>
+  );
+}
+
+// (new) новый синтаксис
+import {Component} from 'react';
+render() {
+  return (
+    <>
+      <span></span>
+      <p></p>
+    </>
   );
 }
 
